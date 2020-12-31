@@ -5,8 +5,8 @@
       "noImplicitAny": true,
       "removeComments": true,
       "preserveConstEnums": true,
-      "outDir": "bin/build",
+      "outDir": "bin/build/getDrugs",
       "sourceMap": true
     },
-    "include": ["src/api/getDrugs", "src/api/shared/*"]
+    "include": ["src/api/getDrugs"]
 }

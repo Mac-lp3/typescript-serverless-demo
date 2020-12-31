@@ -9,6 +9,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.68",
     "mocha": "^8.2.1"
+  },
+  "dependencies": {
+    "mariadb": "^2.5.2"
   }
 }

@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "module": "ES2020",
+      "moduleResolution": "node",
+      "noImplicitAny": true,
+      "removeComments": true,
+      "preserveConstEnums": true,
+      "outDir": "bin/build",
+      "sourceMap": true
+    },
+    "include": ["src/api/getDrugs", "src/api/shared/*"]
+}

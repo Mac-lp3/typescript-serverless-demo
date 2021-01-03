@@ -1,4 +1,14 @@
 
+## TODO
+
+* deploy the lambda code bucket
+* compile/zip/prep lambda code
+* lambda layers (shared)
+    * import pattern
+    * path mapping pattern
+    * deployment prep
+    * TF
+
 ## TypeScript
 
 Classes need to be initialized

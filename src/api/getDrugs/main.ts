@@ -1,4 +1,3 @@
-// import { Dao } from '../shared/dao/dao';
 import { APIGatewayEvent, Context } from 'aws-lambda';
 
 // let runTimeDao: Dao<any>;

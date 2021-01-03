@@ -1,6 +1,7 @@
 
 ## TODO
 
+* create/deploy lambda
 * lambda layers (node_modules)
 * lambda layers (shared)
     * import pattern

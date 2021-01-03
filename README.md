@@ -1,13 +1,12 @@
 
 ## TODO
 
-* lambda layers (node_modules)
+* mariadb ec2
 * lambda layers (shared)
     * import pattern
     * path mapping pattern
     * deployment prep
     * TF
-* VPC and subnets for EC2
 * TF watch file for changes
 
 ### extended todos

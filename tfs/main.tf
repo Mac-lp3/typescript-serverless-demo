@@ -11,6 +11,10 @@ provider "aws" {
   profile = "admin"
 }
 
+module api_network{
+  source = "./network"
+}
+
 module api_iam {
   source = "./iam"
 }

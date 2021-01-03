@@ -1,13 +1,18 @@
 
 ## TODO
 
-* deploy the lambda code bucket
-* compile/zip/prep lambda code
+* lambda layers (node_modules)
 * lambda layers (shared)
     * import pattern
     * path mapping pattern
     * deployment prep
     * TF
+* VPC and subnets for EC2
+* TF watch file for changes
+
+### extended todos
+
+* terraform encryption at rest (s3) 
 
 ## TypeScript
 

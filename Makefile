@@ -5,7 +5,7 @@ build_lambda_layers:
 	mkdir $(build_dir)/nodejs
 	cp package.json package-lock.json $(build_dir)/nodejs
 	cd $(build_dir)/nodejs && npm install --only=production
-	cd $(build_dir)/nodejs && zip -r ../nodejs.zip *
+	cd $(build_dir) && zip -r nodejs.zip nodejs
 
 # TODO make dynamic for each lambda
 build_get_drugs:

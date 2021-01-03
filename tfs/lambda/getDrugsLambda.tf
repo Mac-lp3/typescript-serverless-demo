@@ -8,5 +8,7 @@ resource "aws_lambda_function" "get_drugs_lambda" {
    runtime = "nodejs12.x"
 
    role = var.general_lambda_role_arn
+
+   layers = [ var.nodejs_layer_arn ]
 }
 

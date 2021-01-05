@@ -23,6 +23,18 @@ module s3_buckets {
   source = "./s3"
 }
 
+module kms_secrets {
+  source = "./kms"
+}
+
+module instances {
+  source       = "./instance"
+  db_subnet_a_id = module.api_network.db_subnet_a_id
+  db_subnet_b_id = module.api_network.db_subnet_b_id
+  db_password  = module.kms_secrets.db_password
+  db_username  = module.kms_secrets.db_username
+}
+
 module api_lambdas {
   source = "./lambda"
   nodejs_layer_arn = module.api_lambdas.nodejs_layer_arn

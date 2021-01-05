@@ -1,7 +1,9 @@
 
+Note, for the builds to work, you must have already created a CMK with the alias `alias/sl_api_cmk`.
+
 ## TODO
 
-* mariadb ec2
+* lambda secret access
 * lambda layers (shared)
     * import pattern
     * path mapping pattern

@@ -12,3 +12,10 @@ build_get_drugs:
 	rm -rf $(build_dir)/getDrugs $(build_dir)/getDrugs.zip 
 	tsc
 	cd $(build_dir)/getDrugs && zip -r ../getDrugs.zip *
+
+ensure_kms_cmk:
+	# needed?
+
+get_kms_encryption:
+	# private user inputs?
+	# store the alias some where?

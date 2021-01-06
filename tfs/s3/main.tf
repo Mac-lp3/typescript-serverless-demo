@@ -1,11 +1,11 @@
 resource "aws_s3_bucket" "lambda_code" { 
-  bucket = "sl-api-lambda-code"
+  bucket = "slapi-lambda-code"
   acl    = "private"
 
   tags = {
-    name        = "lambda_code"
-    app         = "sl-api"
+    application = "slapi"
     environment = "dev"
+    name        = "lambda code bucket"
   }
 }
 
@@ -15,6 +15,12 @@ resource "aws_s3_bucket_object" "get_drugs_zip" {
   acl    = "private"
   source = var.get_drugs_zip_path
   etag   = filemd5(var.get_drugs_zip_path)
+
+  tags = {
+    application = "slapi"
+    environment = "dev"
+    name        = "getDrugs code zip"
+  }
 }
 
 resource "aws_s3_bucket_object" "nodejs_zip" {
@@ -23,16 +29,10 @@ resource "aws_s3_bucket_object" "nodejs_zip" {
   acl    = "private"
   source = var.nodejs_zip_path
   etag   = filemd5(var.nodejs_zip_path)
-}
 
-output "lambda_code_bucket" {
-    value = aws_s3_bucket.lambda_code.bucket
-}
-
-output "get_drugs_object_key" {
-    value = aws_s3_bucket_object.get_drugs_zip.key
-}
-
-output "nodejs_object_key" {
-    value = aws_s3_bucket_object.nodejs_zip.key
+  tags = {
+    application = "slapi"
+    environment = "dev"
+    name        = "nodejs layer code zip"
+  }
 }

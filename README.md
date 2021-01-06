@@ -3,14 +3,13 @@ Note, for the builds to work, you must have already created a CMK with the alias
 
 ## TODO
 
-* pass encryped secrets into lambda
 * decrypt secrets in lambda
+* db init script
 * lambda layers (shared)
     * import pattern
     * path mapping pattern
     * deployment prep
     * TF
-* TF watch file for changes
 
 ### extended todos
 

@@ -10,5 +10,12 @@ resource "aws_lambda_function" "get_drugs_lambda" {
    role = var.general_lambda_role_arn
 
    layers = [ var.nodejs_layer_arn ]
-}
 
+   environment {
+    variables = {
+      DB_USERNAME_ENC = var.db_username_enc
+      DB_PASSWORD_ENC = var.db_password_enc
+      DB_NAME     = var.db_name
+    }
+  }
+}

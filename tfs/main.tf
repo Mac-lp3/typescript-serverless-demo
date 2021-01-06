@@ -42,4 +42,7 @@ module api_lambdas {
   lambda_code_bucket = module.s3_buckets.lambda_code_bucket
   get_drugs_object_key = module.s3_buckets.get_drugs_object_key
   nodejs_object_key = module.s3_buckets.nodejs_object_key
+  db_password_enc = module.kms_secrets.db_password_enc
+  db_username_enc = module.kms_secrets.db_username_enc
+  db_name = module.instances.api_db_name
 }

@@ -3,7 +3,8 @@ Note, for the builds to work, you must have already created a CMK with the alias
 
 ## TODO
 
-* lambda secret access
+* pass encryped secrets into lambda
+* decrypt secrets in lambda
 * lambda layers (shared)
     * import pattern
     * path mapping pattern

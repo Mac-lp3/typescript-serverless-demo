@@ -9,9 +9,9 @@ build_lambda_layers:
 
 # TODO make dynamic for each lambda
 build_get_drugs:
-	rm -rf $(build_dir)/getDrugs $(build_dir)/getDrugs.zip 
+	rm -rf $(build_dir)/src/api/getDrugs $(build_dir)/getDrugs.zip 
 	tsc
-	cd $(build_dir)/getDrugs && zip -r ../getDrugs.zip *
+	cd $(build_dir)/src/api/getDrugs && zip -r ../../../getDrugs.zip *
 
 ensure_kms_cmk:
 	# needed?

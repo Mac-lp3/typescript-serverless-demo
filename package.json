@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/mocha/bin/_mocha test/**.ts",
-    "ts": "mocha bin/build/test/*.js"
+    "test": "tsc && mocha bin/build/test/*.js"
   },
   "author": "",
   "license": "ISC",

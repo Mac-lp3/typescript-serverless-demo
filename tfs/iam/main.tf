@@ -47,8 +47,8 @@ resource "aws_iam_policy" "slapi_cmk_decrypt_policy" {
       "Effect": "Allow",
       "Resource": "*",
       "Condition": {
-        "StringLike": {
-          "kms:RequestAlias": "alias/*sl_api_cmk*"
+        "ForAnyValue:StringEquals": {
+          "kms:ResourceAliases": "alias/sl_api_cmk"
         }
       }
     }

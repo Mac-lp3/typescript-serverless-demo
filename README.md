@@ -3,8 +3,8 @@ Note, for the builds to work, you must have already created a CMK with the alias
 
 ## TODO
 
-* decrypt secrets in lambda
 * db init script
+* Dynamic env module
 * lambda layers (shared)
     * import pattern
     * path mapping pattern

@@ -8,5 +8,5 @@
       "outDir": "bin/build/",
       "sourceMap": true
     },
-    "include": ["src/api/", "test"]
+    "include": ["src", "test"]
 }

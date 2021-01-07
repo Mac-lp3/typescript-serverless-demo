@@ -25,6 +25,7 @@ module s3_buckets {
 
 module kms_secrets {
   source = "./kms"
+  general_lambda_role_arn = module.api_iam.general_lambda_role_arn
 }
 
 module instances {

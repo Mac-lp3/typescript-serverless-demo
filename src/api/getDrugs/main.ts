@@ -9,6 +9,7 @@ async function decryptString(payload: string) {
         CiphertextBlob: Buffer.from(payload, 'base64')
     };
     
+    console.log()
     const decryptResult = await kmsClient.decrypt(paramsDecrypt).promise();
     
     if (Buffer.isBuffer(decryptResult.Plaintext)) {
@@ -18,23 +19,23 @@ async function decryptString(payload: string) {
     }
 }
 
-let DB_USERNAME: string;
+let DB_USERNAME = decryptString(process.env['DB_USERNAME_ENC']);
 let DB_PASSWORD: string;
 let DB_NAME: string;
 
-async function setDatabaseVariables() {
-    // decrypt DB variables
-    DB_USERNAME = await decryptString(process.env['DB_USERNAME_ENC']);
-    DB_PASSWORD = await decryptString(process.env['DB_PASSWORD_ENC']);
-    DB_NAME = process.env['DB_NAME'];
-}
+// async function setDatabaseVariables() {
+//     // decrypt DB variables
+//     DB_USERNAME = await decryptString(process.env['DB_USERNAME_ENC']);
+//     DB_PASSWORD = await decryptString(process.env['DB_PASSWORD_ENC']);
+//     DB_NAME = process.env['DB_NAME'];
+// }
 
-setDatabaseVariables();
+// setDatabaseVariables();
 
 export async function handle(event: APIGatewayEvent, context: Context) {
     console.log('hi from the getDrugs lambda');
     createPool({});
     console.log(`The database name is: ${process.env['DB_NAME']}`);
-    console.log(`The database username is: ${process.env['DB_USERNAME_ENC']}, or ${DB_USERNAME}`);
+    console.log(`The database username is: ${process.env['DB_USERNAME_ENC']}, or ${await DB_USERNAME}`);
     // runTimeDao.getDrugs({});
 }

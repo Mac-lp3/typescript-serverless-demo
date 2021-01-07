@@ -5,3 +5,4 @@ variable db_username_enc {
 variable db_password_enc {
     default   = "AQICAHiFdTpZAHCp4rBT2KpukE7loBbZKQWUcOAgVUNIQE1QhgGzC+JDPz3qCqNzKfQe8/mTAAAAZzBlBgkqhkiG9w0BBwagWDBWAgEAMFEGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMpRBrbdMNRGPuI/xnAgEQgCSS5Hc4fHEbUppTn4rU0MjipYN8KFDZBUzL6YMYBgI1ZnhSK4w="
 }
+variable general_lambda_role_arn {}

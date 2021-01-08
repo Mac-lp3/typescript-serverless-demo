@@ -13,9 +13,17 @@ build_nodejs_layer:
 	cd $(build_dir)/nodejs && npm install --only=production
 	cd $(build_dir) && zip -r nodejs.zip nodejs
 
+build_db_setup:
+	rm -rf $(build_dir)/src/init/mariadb $(build_dir)/dbSetup.zip
+	tsc
+	# TODO - is there a better way?
+	# replace local shared/ with lambda layer /opt/
+	sed -i 's|../../shared|/opt/nodejs/shared|g'  $(build_dir)/src/init/**/*.js
+	cd $(build_dir)/src/init/mariadb && zip -r ../../../dbSetup.zip *
+
 # TODO make dynamic for each lambda
 build_get_drugs:
-	rm -rf $(build_dir)/src/api/getDrugs $(build_dir)/getDrugs.zip 
+	rm -rf $(build_dir)/src/api/getDrugs $(build_dir)/getDrugs.zip
 	tsc
 	# TODO - is there a better way?
 	# replace local shared/ with lambda layer /opt/

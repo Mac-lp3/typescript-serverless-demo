@@ -1,9 +1,14 @@
 # external vars
 variable general_lambda_role_arn {}
+
 variable lambda_code_bucket {}
+
 variable get_drugs_object_key {}
+variable db_setup_object_key {}
 variable nodejs_object_key {}
+
 variable nodejs_layer_arn {}
+variable sns_creation_topic_arn {}
 
 # DB config
 variable db_password_enc {

@@ -6,6 +6,10 @@ output "get_drugs_object_key" {
     value = aws_s3_bucket_object.get_drugs_zip.key
 }
 
+output "db_setup_object_key" {
+    value = aws_s3_bucket_object.db_setup_zip.key
+}
+
 output "nodejs_object_key" {
     value = aws_s3_bucket_object.nodejs_zip.key
 }

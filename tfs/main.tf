@@ -24,8 +24,14 @@ module s3_buckets {
 }
 
 module kms_secrets {
-  source = "./kms"
+  source                  = "./kms"
   general_lambda_role_arn = module.api_iam.general_lambda_role_arn
+}
+
+module sns {
+  source                 = "./sns"
+  api_db_id              = module.instances.api_db_id
+  db_setup_function_name = module.api_lambdas.db_setup_function_name
 }
 
 module instances {
@@ -37,13 +43,17 @@ module instances {
 }
 
 module api_lambdas {
-  source = "./lambda"
-  nodejs_layer_arn = module.api_lambdas.nodejs_layer_arn
+  source                  = "./lambda"
+  sns_creation_topic_arn  = module.sns.sns_creation_topic_arn
+  nodejs_layer_arn        = module.api_lambdas.nodejs_layer_arn
   general_lambda_role_arn = module.api_iam.general_lambda_role_arn
-  lambda_code_bucket = module.s3_buckets.lambda_code_bucket
+
+  lambda_code_bucket   = module.s3_buckets.lambda_code_bucket
   get_drugs_object_key = module.s3_buckets.get_drugs_object_key
-  nodejs_object_key = module.s3_buckets.nodejs_object_key
+  db_setup_object_key  = module.s3_buckets.db_setup_object_key
+  nodejs_object_key    = module.s3_buckets.nodejs_object_key
+  
   db_password_enc = module.kms_secrets.db_password_enc
   db_username_enc = module.kms_secrets.db_username_enc
-  db_name = module.instances.api_db_name
+  db_name         = module.instances.api_db_name
 }

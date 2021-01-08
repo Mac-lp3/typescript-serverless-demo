@@ -36,8 +36,13 @@ describe('getDrugs Lambda', function() {
       resource: 'drugs'
     }
     
-    it('Should create a connection', function(done) {
+    it('Should create a connection', async function(done) {
+      const env = process.env;
+      process.env['DB_PASSWORD_ENC'] = 'ok';
+      process.env['DB_USERNAME_ENC'] = 'ok';
       handle(emptyEvent, context);
+      process.env = env;
+
       done();
       //assert.equal([1, 2, 3].indexOf(4), -1);
     });

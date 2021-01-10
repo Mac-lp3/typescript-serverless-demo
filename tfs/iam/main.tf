@@ -57,7 +57,38 @@ resource "aws_iam_policy" "slapi_cmk_decrypt_policy" {
 EOF
 }
 
+resource "aws_iam_policy" "slapi_cloudwatch_policy" {
+  name   = "slapi-cloudwatch-policy"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }, {
+      "Action": [
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:logs:us-east-1:843570803560:log-group:/aws/lambda/*:*"
+    }
+  ]
+}
+EOF
+}
+
 resource "aws_iam_role_policy_attachment" "slapi_cmk_decrypt_policy_attachment" {
-    role       = aws_iam_role.slapi_general_lambda_role.name
-    policy_arn = aws_iam_policy.slapi_cmk_decrypt_policy.arn
+  role       = aws_iam_role.slapi_general_lambda_role.name
+  policy_arn = aws_iam_policy.slapi_cmk_decrypt_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "slapi_cloudwatch_policy_attachment" {
+  role       = aws_iam_role.slapi_general_lambda_role.name
+  policy_arn = aws_iam_policy.slapi_cloudwatch_policy.arn
 }

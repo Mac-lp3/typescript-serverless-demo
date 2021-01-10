@@ -38,8 +38,8 @@ module instances {
   source       = "./instance"
   db_subnet_a_id = module.api_network.db_subnet_a_id
   db_subnet_b_id = module.api_network.db_subnet_b_id
-  db_password  = module.kms_secrets.db_password
-  db_username  = module.kms_secrets.db_username
+  db_password    = module.kms_secrets.db_password
+  db_username    = module.kms_secrets.db_username
 }
 
 module api_lambdas {
@@ -56,4 +56,6 @@ module api_lambdas {
   db_password_enc = module.kms_secrets.db_password_enc
   db_username_enc = module.kms_secrets.db_username_enc
   db_name         = module.instances.api_db_name
+  db_host         = module.instances.api_db_host
+  db_port         = module.instances.api_db_port
 }

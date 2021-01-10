@@ -24,7 +24,9 @@ resource "aws_lambda_function" "get_drugs_lambda" {
     variables = {
       DB_USERNAME_ENC = var.db_username_enc
       DB_PASSWORD_ENC = var.db_password_enc
-      DB_NAME     = var.db_name
+      DB_NAME         = var.db_name
+      DB_HOST         = var.db_host
+      DB_PORT         = var.db_port
     }
   }
 
@@ -51,7 +53,9 @@ resource "aws_lambda_function" "rds_setup" {
     variables = {
       DB_USERNAME_ENC = var.db_username_enc
       DB_PASSWORD_ENC = var.db_password_enc
-      DB_NAME     = var.db_name
+      DB_NAME         = var.db_name
+      DB_HOST         = var.db_host
+      DB_PORT         = var.db_port
       # SQL_SCRIPT = "${replace(trimspace(data.template_file.sql_script.rendered), "/\n/", " ")}"
     }
   }

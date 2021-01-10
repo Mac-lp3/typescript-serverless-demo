@@ -2,7 +2,7 @@ import { KMS } from 'aws-sdk';
 
 const kmsClient = new KMS();
 
-export async function get(propName: string): Promise<string> {
+export async function getValue(propName: string): Promise<string> {
     const payload = process.env[propName];
 
     let value = undefined;
@@ -13,7 +13,7 @@ export async function get(propName: string): Promise<string> {
         const isHostedOnAWS = !!(process.env.LAMBDA_TASK_ROOT || process.env.AWS_EXECUTION_ENV);
 
         if (isEncrypted && isHostedOnAWS) {
-            value = awsDecryptString(payload);
+            value = await awsDecryptString(payload);
         } else {
             value = payload;
         }

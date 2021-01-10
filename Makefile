@@ -4,6 +4,9 @@ build_nodejs_layer:
 	# clean up
 	rm -rf $(build_dir)/nodejs $(build_dir)/nodejs.zip
 	mkdir $(build_dir)/nodejs
+
+	# generate shared
+	tsc
 	
 	# copy in shared/ and the npm stuff
 	cp package.json package-lock.json $(build_dir)/nodejs

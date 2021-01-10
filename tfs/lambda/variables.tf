@@ -10,6 +10,9 @@ variable nodejs_object_key {}
 variable nodejs_layer_arn {}
 variable sns_creation_topic_arn {}
 
+variable db_host {}
+variable db_port {}
+
 # DB config
 variable db_password_enc {
     sensitive = true

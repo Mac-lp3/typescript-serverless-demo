@@ -13,7 +13,7 @@ export async function getValue(propName: string): Promise<string> {
         const isHostedOnAWS = !!(process.env.LAMBDA_TASK_ROOT || process.env.AWS_EXECUTION_ENV);
 
         if (isEncrypted && isHostedOnAWS) {
-            value = await awsDecryptString(payload);
+            value = awsDecryptString(payload);
         } else {
             value = payload;
         }

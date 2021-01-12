@@ -76,7 +76,7 @@ resource "aws_iam_policy" "slapi_cloudwatch_policy" {
         "logs:PutLogEvents"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:logs:us-east-1:843570803560:log-group:/aws/lambda/*:*"
+      "Resource": "arn:aws:logs:us-east-1::log-group:/aws/lambda/*:*"
     }
   ]
 }

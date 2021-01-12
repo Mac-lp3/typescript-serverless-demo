@@ -1,3 +1,10 @@
+# About
+
+This project is a simple set up for a serverless architecture written in TypeScript.
+
+It includes an API gateway, MariaDB RDS instance, and a GET lambda function.
+
+## Notes
 
 Note, for the builds to work, you must have already created a CMK with the alias `alias/sl_api_cmk`.
 
@@ -7,7 +14,9 @@ Store those encryption strings in the terraform variables.
 
 ## TODO
 
-* add DB connection to lambdas
+* API gateway
+* route 53
+* lambda db subnet access
 * db init sql script
     * test locally on docker
 

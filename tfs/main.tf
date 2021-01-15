@@ -13,6 +13,7 @@ provider "aws" {
 
 module api{
   source = "./api"
+  get_drugs_lambda_arn = module.api_lambdas.
 }
 
 module api_network{

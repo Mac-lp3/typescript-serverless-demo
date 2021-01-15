@@ -5,3 +5,7 @@ output "nodejs_layer_arn" {
 output "db_setup_function_name" {
   value = aws_lambda_function.rds_setup.function_name
 }
+
+output "get_drugs_lambda_arn" {
+  value = aws_lambda_function.get_drugs_lambda_arn
+}

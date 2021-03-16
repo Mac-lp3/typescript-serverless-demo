@@ -1,4 +1,6 @@
 # external vars
+variable api_gateway_exec_arn {}
+
 variable general_lambda_role_arn {}
 
 variable lambda_code_bucket {}

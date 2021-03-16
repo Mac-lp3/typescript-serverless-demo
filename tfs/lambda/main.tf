@@ -37,6 +37,17 @@ resource "aws_lambda_function" "get_drugs_lambda" {
   }
 }
 
+resource "aws_lambda_permission" "api_invoke" {
+   statement_id  = "AllowAPIGatewayInvoke"
+   action        = "lambda:InvokeFunction"
+   function_name = aws_lambda_function.get_drugs_lambda.function_name
+   principal     = "apigateway.amazonaws.com"
+
+   # The "/*/*" portion grants access from any method on any resource
+   # within the API Gateway REST API.
+   source_arn = "${var.api_gateway_exec_arn}/*/*"
+}
+
 resource "aws_lambda_function" "rds_setup" {
   function_name    = "rdsSetup"
   s3_bucket        = var.lambda_code_bucket

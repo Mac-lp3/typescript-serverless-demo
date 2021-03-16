@@ -52,6 +52,7 @@ module api_lambdas {
   sns_creation_topic_arn  = module.sns.sns_creation_topic_arn
   nodejs_layer_arn        = module.api_lambdas.nodejs_layer_arn
   general_lambda_role_arn = module.api_iam.general_lambda_role_arn
+  api_gateway_exec_arn  = module.api.api_gateway_exec_arn
 
   lambda_code_bucket   = module.s3_buckets.lambda_code_bucket
   get_drugs_object_key = module.s3_buckets.get_drugs_object_key

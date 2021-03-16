@@ -5,3 +5,4 @@ bin/build.map
 .terraform
 .terraform.*
 terraform.*
+crash.log

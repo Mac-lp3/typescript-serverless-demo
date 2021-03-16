@@ -5,7 +5,7 @@ resource "aws_db_subnet_group" "slapi_db_subnet_group" {
   tags = {
     application = "slapi"
     environment = "dev"
-    name        = "slapi db subnet group"
+    Name        = "slapi db subnet group"
   }
 }
 

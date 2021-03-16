@@ -7,5 +7,9 @@ output "db_setup_function_name" {
 }
 
 output "get_drugs_lambda_arn" {
-  value = aws_lambda_function.get_drugs_lambda_arn
+  value = aws_lambda_function.get_drugs_lambda.arn
+}
+
+output "get_drugs_invoke_arn" {
+  value = aws_lambda_function.get_drugs_lambda.invoke_arn
 }

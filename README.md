@@ -12,11 +12,22 @@ You also need to use that CMK to encrypt the DB username and password.
 
 Store those encryption strings in the terraform variables.
 
+# build/deploy
+
+Lambdas use a shared layer.
+
 ## TODO
 
 * API gateway
+    * deploy get/
+    * verify invocation/connection
+* check RDS network
+    * ACL
+    * sec groups
+* check lambda -> rds connection
 * route 53
 * lambda db subnet access
+* refine lambdas, tsc, and test set up
 * db init sql script
     * test locally on docker
 

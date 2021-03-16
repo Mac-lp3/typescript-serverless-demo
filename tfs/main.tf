@@ -13,7 +13,7 @@ provider "aws" {
 
 module api{
   source = "./api"
-  get_drugs_lambda_arn = module.api_lambdas.
+  get_drugs_invoke_arn = module.api_lambdas.get_drugs_invoke_arn
 }
 
 module api_network{
@@ -57,7 +57,7 @@ module api_lambdas {
   get_drugs_object_key = module.s3_buckets.get_drugs_object_key
   db_setup_object_key  = module.s3_buckets.db_setup_object_key
   nodejs_object_key    = module.s3_buckets.nodejs_object_key
-  
+
   db_password_enc = module.kms_secrets.db_password_enc
   db_username_enc = module.kms_secrets.db_username_enc
   db_name         = module.instances.api_db_name

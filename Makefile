@@ -29,7 +29,7 @@ build_get_drugs:
 	rm -rf $(build_dir)/src/api/getDrugs $(build_dir)/getDrugs.zip
 	tsc
 	# TODO - is there a better way?
-	# replace local shared/ with lambda layer /opt/
+	# replace local shared/ path string with AWS lambda layer /opt/ path
 	sed -i 's|../../shared|/opt/nodejs/shared|g'  $(build_dir)/src/api/**/*.js
 	cd $(build_dir)/src/api/getDrugs && zip -r ../../../getDrugs.zip *
 
@@ -39,3 +39,7 @@ ensure_kms_cmk:
 get_kms_encryption:
 	# private user inputs?
 	# store the alias some where?
+
+build_everything: build_nodejs_layer build_get_drugs
+	echo "add additional functions i guess"
+	echo "if you want to deploy too, run the terraform command"

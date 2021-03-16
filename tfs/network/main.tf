@@ -4,7 +4,7 @@ resource "aws_vpc" "slapi_vpc" {
   tags = {
     application = "slapi"
     environment = "dev"
-    name        = "slapi db subnet"
+    Name        = "slapi vpc"
   }
 }
 
@@ -16,7 +16,7 @@ resource "aws_subnet" "slapi_db_subnet_a" {
   tags = {
     application = "slapi"
     environment = "dev"
-    name        = "slapi db subnet a"
+    Name        = "slapi db subnet a"
   }
 }
 
@@ -28,6 +28,6 @@ resource "aws_subnet" "slapi_db_subnet_b" {
   tags = {
     application = "slapi"
     environment = "dev"
-    name        = "slapi db subnet b"
+    Name        = "slapi db subnet b"
   }
 }

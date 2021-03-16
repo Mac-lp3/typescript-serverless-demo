@@ -1,2 +1,2 @@
 # external
-variable get_drugs_lambda_arn {}
+variable get_drugs_invoke_arn {}

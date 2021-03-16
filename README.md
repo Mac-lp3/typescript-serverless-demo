@@ -18,9 +18,12 @@ Lambdas use a shared layer.
 
 ## TODO
 
-* API gateway
-    * deploy get/
-    * verify invocation/connection
+* ~~API gateway~~
+    * ~~deploy get/~~
+    * ~~verify invocation/connection~~
+* AWS_PROXY vs AWS vs HTTP
+    * Add response type
+    * update response object
 * check RDS network
     * ACL
     * sec groups

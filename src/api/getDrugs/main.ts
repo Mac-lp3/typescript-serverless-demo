@@ -1,4 +1,3 @@
-import { APIGatewayEvent, Context } from 'aws-lambda';
 import { getConnection } from '../../shared/mariaDao';
 // import { getValue } from '../../shared/environment';
 // import { createPool, Pool } from 'mariadb';
@@ -24,7 +23,7 @@ import { getConnection } from '../../shared/mariaDao';
 //     });
 // });
 
-export async function handle(event: APIGatewayEvent, context: Context) {
+export async function getDrugs(identifier?: string) {
     console.log('hi from the getDrugs lambda');
     console.log(`The database host is: ${process.env['DB_HOST']}`);
     console.log(`The encrypted database username is: ${process.env['DB_USERNAME_ENC']}`);

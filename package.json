@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/*.ts",
-    "test:int": "mocha -r ts-node/register test/int/*.ts"
+    "pretest:int": "docker run --rm -p 3306:3306 --name local-maria -e MYSQL_ROOT_PASSWORD=admin -d mariadb",
+    "test:int": "mocha -r ts-node/register test/int/*.ts || echo 'failed?'",
+    "posttest:int": "docker container stop local-maria"
   },
   "author": "",
   "license": "ISC",

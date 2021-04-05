@@ -5,28 +5,25 @@
 
 const ERROR_TYPE_VAL = 'ErrorPayload';
 
-export interface BasePayload {};
+interface BasePayload {
+    readonly payloadType: string;
+};
+
 export interface ErrorPayload extends BasePayload {
-    type: 'ErrorPayload';
+    readonly payloadType: 'ErrorPayload';
+    summary: string;
+    details: string;
+    resources: string[];
 };
+
 export interface WarningPayload extends BasePayload {
-    type: 'WarningPayload';
+    readonly payloadType: 'WarningPayload';
+    metadata: any;
+    [propName: string]: any;
 };
+
 export interface ResourcePayload extends BasePayload {
-    type: 'ResourcePayload';
-};
-
-/**
- * type util functions.
- */
-export function isAnError(obj: BasePayload): obj is ErrorPayload {
-    return (obj as ErrorPayload).type === 'ErrorPayload';
-};
-
-export function isAWarning(obj: BasePayload): obj is WarningPayload {
-    return (obj as WarningPayload).type === 'WarningPayload';
-};
-
-export function isAResource(obj: BasePayload): obj is ResourcePayload {
-    return (obj as ResourcePayload).type === 'ResourcePayload';
+    readonly payloadType: 'ResourcePayload';
+    metadata: any;
+    [propName: string]: any;
 };

@@ -4,15 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "tsc && mocha --exit bin/build/test/*.js"
+    "test": "mocha -r ts-node/register test/*.ts",
+    "test:int": "mocha -r ts-node/register test/int/*.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.68",
-    "@types/mocha": "^8.2.0",
+    "@types/mocha": "^8.2.2",
     "mocha": "^8.2.1",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "aws-sdk": "^2.823.0",

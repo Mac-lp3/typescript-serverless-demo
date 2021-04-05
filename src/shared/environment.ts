@@ -2,6 +2,11 @@ import { KMS } from 'aws-sdk';
 
 const kmsClient = new KMS();
 
+/**
+ * Note: built in support for running in AWS, vs local int testing with docker, vs simple unit tests.
+ * @param propName 
+ * @returns 
+ */
 export async function getValue(propName: string): Promise<string> {
     const payload = process.env[propName];
 

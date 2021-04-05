@@ -1,20 +1,32 @@
-import { Error, Resource, Warning } from '../shared/types';
+import { ProxyResult } from 'aws-lambda';
+import { isAResource, isAWarning, isAnError } from '../shared/typeUtils';
+import { ErrorPayload, WarningPayload, ResourcePayload } from '../shared/types';
 
 /**
  * 
  * @param payload 
- * @returns 
+ * @returns
  */
-export function buildResponseObject(payload: Error | Resource | Warning) {
+export function buildResponseObject(payload: ErrorPayload | WarningPayload | ResourcePayload): ProxyResult {
 
-    // TODO - how to actually handle this?
-    let payloadType: string;
+    let body: string;
+    let statusCode: number;
 
-    switch (payloadType) {
-        case 'Error': {
-            break;
-        }
+    if (isAnError(payload)) {
+        statusCode = 404;
+        body = JSON.stringify(payload);
+    } else if (isAResource(payload)) {
+        statusCode = 201;
+        body = JSON.stringify(payload);
+    } else {
+        statusCode = 500;
+        body = 'omg';
     }
 
-    return payload;
+    const response: ProxyResult = {
+        statusCode: statusCode,
+        body: body
+    };
+
+    return response;
 };

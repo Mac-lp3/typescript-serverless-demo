@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { handle } from '../src/api/getDrugs/main';
+import { getDrugs } from '../src/api/getDrugs/main';
 import { APIGatewayEvent, Context } from 'aws-lambda';
 
 const context: Context = {
@@ -40,7 +40,7 @@ describe('getDrugs Lambda', function() {
       const env = process.env;
       process.env['DB_PASSWORD_ENC'] = 'ok';
       process.env['DB_USERNAME_ENC'] = 'ok';
-      handle(emptyEvent, context);
+      getDrugs('emptyEvent');
       process.env = env;
 
       done();

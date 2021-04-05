@@ -1,5 +1,5 @@
-import { getValue } from './environment';
 import { createPool } from 'mariadb';
+import { getValue } from './environment';
 
 const DB_NAME = getValue('DB_NAME');
 const DB_HOST = getValue('DB_HOST');

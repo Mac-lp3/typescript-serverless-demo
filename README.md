@@ -18,12 +18,11 @@ Lambdas use a shared layer.
 
 ## TODO
 
-* ~~API gateway~~
-    * ~~deploy get/~~
-    * ~~verify invocation/connection~~
-* AWS_PROXY vs AWS vs HTTP
-    * Add response type
-    * update response object
+* Find username and password for maria DB
+* docker for maria connection
+* docker for maria init script
+* docker for unit tests
+
 * check RDS network
     * ACL
     * sec groups

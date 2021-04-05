@@ -1,33 +1,27 @@
 import { getConnection } from '../../shared/mariaDao';
-// import { getValue } from '../../shared/environment';
-// import { createPool, Pool } from 'mariadb';
+import { ErrorPayload, WarningPayload, ResourcePayload } from '../../shared/types'
 
-// const DB_NAME = getValue('DB_NAME');
-// const DB_HOST = getValue('DB_HOST');
-// const DB_PORT = getValue('DB_PORT');
-// const DB_USERNAME = getValue('DB_USERNAME_ENC');
-// const DB_PASSWORD = getValue('DB_PASSWORD_ENC');
-
-// const connPool = Promise.all([
-//     DB_HOST,
-//     DB_PORT,
-//     DB_USERNAME,
-//     DB_PASSWORD
-// ]).then(vals => {
-//     return createPool({
-//         host: vals[0],
-//         port: Number(vals[1]),
-//         user: vals[2], 
-//         password: vals[3],
-//         connectionLimit: 3
-//     });
-// });
-
-export async function getDrugs(identifier?: string) {
-    console.log('hi from the getDrugs lambda');
+export async function getDrugs(ndc?: string, rxcui?: string, name?: string): Promise<ErrorPayload | WarningPayload | ResourcePayload> {
     console.log(`The database host is: ${process.env['DB_HOST']}`);
     console.log(`The encrypted database username is: ${process.env['DB_USERNAME_ENC']}`);
 
-    const conn = await getConnection();
-    console.log(await conn.query('SHOW DATABASES'));
+    // TODO define resource types
+    // TODO mock connection
+    // TODO establish connection
+    // TODO use connection to get things
+
+    // const conn = await getConnection();
+    // console.log(await conn.query('SHOW DATABASES'));
+
+    let payload: ResourcePayload = {
+        payloadType: 'ResourcePayload',
+        ndc: '01-1234567',
+        rxcui: '8888888',
+        label: 'omg',
+        metadata: {
+            length: 1
+        }
+    }
+
+    return payload;
 }

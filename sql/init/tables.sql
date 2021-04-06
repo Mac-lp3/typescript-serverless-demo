@@ -7,4 +7,5 @@ CREATE TABLE drugs (
     dosage_amount SMALLINT,
     dosage_units VARCHAR(5),
     delivery_method VARCHAR(15),
+    PRIMARY KEY (id)
 );

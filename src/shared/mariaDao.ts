@@ -17,15 +17,17 @@ async function buildConnectionPool(): Promise<Pool> {
 
     return Promise.all([
         DB_HOST,
+        DB_NAME,
         DB_PORT,
         DB_USERNAME,
         DB_PASSWORD
     ]).then(vals => {
         return createPool({
             host: vals[0],
-            port: Number(vals[1]),
-            user: vals[2], 
-            password: vals[3],
+            database: vals[1],
+            port: Number(vals[2]),
+            user: vals[3], 
+            password: vals[4],
             connectionLimit: 3
         });
     });
@@ -44,7 +46,7 @@ async function getConnection() {
 
 export async function listTables() {
     const conn = await getConnection();
-    const raw = await conn.query('SELECT NOW()');
+    const raw = await conn.query('SHOW TABLES');
     conn.release;
 
     return raw;

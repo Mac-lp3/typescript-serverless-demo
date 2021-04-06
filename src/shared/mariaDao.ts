@@ -47,8 +47,22 @@ async function getConnection() {
 export async function listTables() {
     const conn = await getConnection();
     const raw = await conn.query('SHOW TABLES');
-    conn.release;
+    conn.release();
 
+    return raw;
+}
+
+export async function queryDrugs(term: string) {
+
+}
+
+export async function readDrug(id: number) {
+    const conn = await getConnection();
+    const raw = await conn.query(
+        'SELECT * FROM drugs WHERE id = ?',
+        [id]
+    );
+    conn.release();
     return raw;
 }
 
@@ -67,7 +81,7 @@ export async function createDrug(
         'VALUES (?, ?, ?, ?, ?, ?, ?)',
         [ndc, rxcui, nameBrand, nameLabel, dosageAmount, dosageUnits, deliveryMethod]
     );
-    conn.release;
+    conn.release();
     return raw;
 }
 

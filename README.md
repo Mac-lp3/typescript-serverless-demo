@@ -18,11 +18,6 @@ Lambdas use a shared layer.
 
 ## TODO
 
-* Find username and password for maria DB
-* docker for maria connection
-* docker for maria init script
-* docker for unit tests
-
 * check RDS network
     * ACL
     * sec groups

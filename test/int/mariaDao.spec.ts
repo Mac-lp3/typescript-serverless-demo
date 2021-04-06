@@ -9,19 +9,21 @@ import { listTables, poolsClosed } from '../../src/shared/mariaDao';
 
 describe('Dao -> database connectivity', function() {
 
-    before(function() {
+    before(function(done) {
         // see test:int script in package.json 
         process.env.DB_NAME = 'slapi';
         process.env.DB_PORT = '3306';
         process.env.DB_USERNAME_ENC = 'root';
         process.env.DB_PASSWORD_ENC = 'admin';
+        done();
     })
 
-    after(function() {
+    after(function(done) {
         delete process.env.DB_NAME;
         delete process.env.DB_PORT;
         delete process.env.DB_USERNAME_ENC;
         delete process.env.DB_PASSWORD_ENC;
+        done();
     })
 
     it('should create a connection pool', async function() {

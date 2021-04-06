@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/*.ts",
-    "pretest:int": "",
+    "pretest:int": "docker run --rm -p 3306:3306 --name local-maria -e MYSQL_DATABASE=slapi -e MYSQL_ROOT_PASSWORD=admin -d mariadb && sleep 7 && docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < sql/init/tables.sql",
     "test:int": "mocha -r ts-node/register test/int/*.ts || echo 'failed?'",
     "posttest:int": "docker container stop local-maria"
   },

@@ -9,13 +9,3 @@ CREATE TABLE drugs (
     delivery_method VARCHAR(15),
     PRIMARY KEY (id)
 );
-
-INSERT INTO drugs (ndc, rxcui, name_brand, name_label, dosage_amount, dosage_units, delivery_method) VALUES (
-    "01-123123123",
-    "222333444",
-    "bruh",
-    "o shi-",
-    75,
-    "MG",
-    "tabs"
-);

@@ -52,6 +52,25 @@ export async function listTables() {
     return raw;
 }
 
+export async function createDrug(
+    ndc: string,
+    rxcui: string,
+    nameBrand: string,
+    nameLabel: string,
+    dosageAmount: number,
+    dosageUnits: string,
+    deliveryMethod: string
+) {
+    const conn = await getConnection();
+    const raw = await conn.query(
+        'INSERT INTO drugs (ndc, rxcui, name_brand, name_label, dosage_amount, dosage_units, delivery_method) ' +
+        'VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [ndc, rxcui, nameBrand, nameLabel, dosageAmount, dosageUnits, deliveryMethod]
+    );
+    conn.release;
+    return raw;
+}
+
 export function poolsClosed() {
     sharedPool.end();
 }

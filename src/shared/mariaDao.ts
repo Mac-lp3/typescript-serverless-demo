@@ -1,9 +1,13 @@
-import { createPool } from 'mariadb';
+import { createPool, Pool, PoolConnection } from 'mariadb';
 import { getValue } from './environment';
 
-let sharedPool:any = undefined;
+class MariaDao {
 
-async function buildConnectionPool() {
+}
+
+let sharedPool: Pool = undefined;
+
+async function buildConnectionPool(): Promise<Pool> {
 
     const DB_NAME = getValue('DB_NAME');
     const DB_HOST = getValue('DB_HOST');
@@ -28,13 +32,25 @@ async function buildConnectionPool() {
 
 }
 
-export async function getConnection() {
+async function getConnection() {
 
     if (sharedPool === undefined) {
         sharedPool = await buildConnectionPool();
     }
 
     const conn = await sharedPool.getConnection();
-    console.log('congrats, you called getConnection()');
     return conn;
 }
+
+export async function listTables() {
+    const conn = await getConnection();
+    const raw = await conn.query('SELECT NOW()');
+    conn.release;
+
+    return raw;
+}
+
+export function poolsClosed() {
+    sharedPool.end();
+}
+

@@ -1,8 +1,9 @@
-import { getConnection } from '../../src/shared/mariaDao';
+import * as assert from 'assert';
+import { listTables, poolsClosed } from '../../src/shared/mariaDao';
 
 describe('Dao -> database connectivity', function() {
 
-    beforeEach(function() {
+    before(function() {
         // see test:int script in package.json 
         process.env.DB_NAME = 'local-maria';
         process.env.DB_PORT = '3306';
@@ -10,7 +11,7 @@ describe('Dao -> database connectivity', function() {
         process.env.DB_PASSWORD_ENC = 'admin';
     })
 
-    afterEach(function() {
+    after(function() {
         delete process.env.DB_NAME;
         delete process.env.DB_PORT;
         delete process.env.DB_USERNAME_ENC;
@@ -18,8 +19,11 @@ describe('Dao -> database connectivity', function() {
     })
 
     it('should create a connection pool', async function() {
-        console.log(process.env.DB_USERNAME_ENC);
-        const conn = await getConnection();
+        const resp = await listTables();
+        console.log(resp);
+        poolsClosed();
+        assert.ok(true);
+        return null;
     })
 
 })

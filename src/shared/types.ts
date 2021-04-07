@@ -3,8 +3,6 @@
  * All main.ts functions should return an implementation of these.
  */
 
-const ERROR_TYPE_VAL = 'ErrorPayload';
-
 interface BasePayload {
     readonly payloadType: string;
 };
@@ -28,18 +26,30 @@ export interface ResourcePayload extends BasePayload {
     [propName: string]: any;
 };
 
-interface SingleResource {
+export interface ResourceResponseBody {
     metadata: {
-        payloadType: 'Resource',
-        totalLength: 1
-    },
-    payload: any
+        payloadType: 'Resource' | 'ResourceList';
+        totalLength: number;
+    };
+    payload: any | any[];
 }
 
-interface ListResource {
+export interface WarningResponseBody {
     metadata: {
-        payloadType: 'ResourceList',
-        totalLength: number
+        payloadType: 'Warning';
+        totalLength?: number;
     },
-    payload: any[]
+    payload: any;
+}
+
+export interface ErrorResponseBody {
+    metadata: {
+        payloadType: 'Warning';
+        totalLength?: number;
+    },
+    payload: {
+        summary: string;
+        details: string;
+        resources: string[];
+    };
 }

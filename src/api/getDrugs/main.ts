@@ -1,6 +1,6 @@
 import { readDrug } from '../../shared/mariaDao';
 import { ErrorPayload, WarningPayload, ResourcePayload } from '../../shared/types';
-import { buildSingleResponseBody, buildListResponseBody } from '../../shared/bodyBuilderMaria';
+import { buildInstanceResponseBody, buildListResponseBody } from '../../shared/bodyBuilderMaria';
 
 /**
  * 1. ??? Delegates to the approprate DB call. (how is that different than the handler?)

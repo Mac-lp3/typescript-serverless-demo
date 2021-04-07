@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { ImportMock } from 'ts-mock-imports';
 import * as dao from '../src/shared/mariaDao';
 import { getDrugs } from '../src/api/getDrugs/main';
-import { ResourcePayload } from '../src/shared/types';
+import { ResourceResponseBody } from '../src/shared/types';
 
 describe('The getDrugs API method', function() {
 
@@ -27,20 +27,21 @@ describe('The getDrugs API method', function() {
         const res = await getDrugs('1');
 
         // ensure additional props were added
-        assert.ok(res.hasOwnProperty('payloadType'));
         assert.ok(res.hasOwnProperty('metadata'));
+        assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('payloadType'));
+        assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('totalLength'));
 
         // check snake to camel
-        assert.ok(res.hasOwnProperty('snakeOne'));
-        assert.ok(res.hasOwnProperty('snakeTwo'));
-        assert.ok(res.hasOwnProperty('SnAkET'));
+        assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('snakeOne'));
+        assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('snakeTwo'));
+        assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('SnAkET'));
 
         // ensure values are expected
-        assert.strictEqual(res.payloadType, 'ResourcePayload');
-        assert.strictEqual((res as ResourcePayload).metadata.totalResults, 1);
-        assert.strictEqual((res as ResourcePayload).snakeOne, 1);
-        assert.strictEqual((res as ResourcePayload).snakeTwo, 'two');
-        assert.strictEqual((res as ResourcePayload).SnAkET, false);
+        assert.strictEqual((res as ResourceResponseBody).metadata.payloadType, 'Resource');
+        assert.strictEqual((res as ResourceResponseBody).metadata.totalLength, 1);
+        assert.strictEqual((res as ResourceResponseBody).payload.snakeOne, 1);
+        assert.strictEqual((res as ResourceResponseBody).payload.snakeTwo, 'two');
+        assert.strictEqual((res as ResourceResponseBody).payload.SnAkET, false);
 
     })
 
@@ -52,15 +53,16 @@ describe('The getDrugs API method', function() {
         const res = await getDrugs('1');
 
         // ensure additional props were added
-        assert.ok(res.hasOwnProperty('payloadType'));
-        assert.ok(res.hasOwnProperty('metadata'));
+        assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('payloadType'));
+        assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('totalLength'));
 
         // ensure no other props were added
         assert.strictEqual(Object.keys(res).length, 2);
+        assert.strictEqual(Object.keys((res as ResourceResponseBody).payload).length, 0);
 
         // ensure values are expected
-        assert.strictEqual(res.payloadType, 'WarningPayload');
-        assert.strictEqual((res as ResourcePayload).metadata.totalResults, 0);
+        assert.strictEqual((res as ResourceResponseBody).metadata.payloadType, 'Resource');
+        assert.strictEqual((res as ResourceResponseBody).metadata.totalLength, 0);
 
     })
 

@@ -1,18 +1,20 @@
 import * as assert from 'assert';
 import { buildResponseObject } from '../src/shared/responseBuilder';
-import { ErrorPayload, ResourcePayload, WarningPayload } from '../src/shared/types';
+import { ErrorPayload, ResourceResponseBody, WarningPayload } from '../src/shared/types';
 
 describe('buildResponseObject function', function() {
 
     it('should return a 2XX when all good', function() {
 
-        let tmp: ResourcePayload;
+        let tmp: ResourceResponseBody;
         tmp = {
-            payloadType: 'ResourcePayload',
-            id: 123,
-            name: 'lol',
+            payload: {
+                id: 123,
+                name: 'lol'
+            },
             metadata: {
-                length: 1
+                payloadType: 'Resource',
+                totalLength: 1
             }
         }
 

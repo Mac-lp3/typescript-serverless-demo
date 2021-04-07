@@ -1,13 +1,13 @@
 import { ProxyResult } from 'aws-lambda';
 import { isAResource, isAWarning, isAnError } from '../shared/typeUtils';
-import { ErrorPayload, WarningPayload, ResourcePayload } from '../shared/types';
+import { ErrorPayload, WarningPayload, ResourceResponseBody } from '../shared/types';
 
 /**
  * 
  * @param payload 
  * @returns
  */
-export function buildResponseObject(payload: ErrorPayload | WarningPayload | ResourcePayload): ProxyResult {
+export function buildResponseObject(payload: ErrorPayload | WarningPayload | ResourceResponseBody): ProxyResult {
 
     let body: string;
     let statusCode: number;

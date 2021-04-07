@@ -28,12 +28,13 @@ export function buildInstanceResponseBody(rawDbData: Object | Object[], fyiMessa
         payload: {}
     }
 
-    if (Array.isArray(rawDbData)) {
+    if (Array.isArray(rawDbData) && rawDbData.length > 0) {
 
         responseBody.payload = convertPayloadToCamel(rawDbData)[0];
 
     } else {
         // TODO JSON object containing status of the query
+        responseBody.metadata.totalLength = 0;
     }
 
     return responseBody;

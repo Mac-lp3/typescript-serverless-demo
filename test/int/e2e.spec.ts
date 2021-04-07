@@ -23,7 +23,9 @@ describe('e2e getDrugs lambda', function() {
         httpMethod: 'GET',
         isBase64Encoded: false,
         path: '',
-        pathParameters: {},
+        pathParameters: {
+            id: 1 // TODO this needs to be set
+        },
         queryStringParameters: {}
     } as any
 

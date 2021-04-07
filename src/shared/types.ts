@@ -27,3 +27,19 @@ export interface ResourcePayload extends BasePayload {
     metadata: any;
     [propName: string]: any;
 };
+
+interface SingleResource {
+    metadata: {
+        payloadType: 'Resource',
+        totalLength: 1
+    },
+    payload: any
+}
+
+interface ListResource {
+    metadata: {
+        payloadType: 'ResourceList',
+        totalLength: number
+    },
+    payload: any[]
+}

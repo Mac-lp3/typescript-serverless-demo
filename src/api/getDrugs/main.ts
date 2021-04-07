@@ -1,6 +1,19 @@
 import { readDrug } from '../../shared/mariaDao';
 import { ErrorPayload, WarningPayload, ResourcePayload } from '../../shared/types';
+import { buildSingleResponseBody, buildListResponseBody } from '../../shared/bodyBuilderMaria';
 
+/**
+ * 1. ??? Delegates to the approprate DB call. (how is that different than the handler?)
+ * X. ??? any input validation?
+ * 2. Delegates to the DB specific body builder
+ * 3. Handles any low-level exceptions
+ * 
+ * @param id 
+ * @param ndc 
+ * @param rxcui 
+ * @param searchTerm 
+ * @returns 
+ */
 export async function getDrugs(id?: string, ndc?: string, rxcui?: string, searchTerm?: string): Promise<ErrorPayload | WarningPayload | ResourcePayload> {
 
     let payload: ErrorPayload | WarningPayload | ResourcePayload;

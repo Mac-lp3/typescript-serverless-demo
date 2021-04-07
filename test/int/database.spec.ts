@@ -29,7 +29,7 @@ describe('Database connectivity', function() {
         delete process.env.DB_PORT;
         delete process.env.DB_USERNAME_ENC;
         delete process.env.DB_PASSWORD_ENC;
-        poolsClosed();
+        //poolsClosed();
     })
 
     describe('Dao methods', function() {

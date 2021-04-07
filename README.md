@@ -14,7 +14,7 @@ Store those encryption strings in the terraform variables.
 
 # test/build/deploy
 
-Tests use npm, build and deploys use make.
+Tests use `npm`, build and deploy uses `make`.
 
 Simple unit tests with `npm run test`. 
 
@@ -24,8 +24,14 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 
 ## TODO
 
+* end to end handler -> dao test
+* create pool outside of handler
+* pass in query params
+
 * proper drug data to insert on deploy
-* integrated test of get drugs method using that list
+
+* confirm/test response body serialization
+
 * lambda for running the SQL
     * hellow world in the private subnet
     * test connection in the private subnet

@@ -25,27 +25,6 @@ export async function getDrugs(id?: string, ndc?: string, rxcui?: string, search
 
         // TODO this call depends on the DAO method
         responseBody = buildInstanceResponseBody(rawDbData);
-
-        // if (rawDbData.length === 1) {
-        //     payload = {
-        //         payloadType: 'ResourcePayload',
-        //         metadata: {
-        //             totalResults: 1
-        //         }
-        //     }
-        //     for (const [key, value] of Object.entries(rawDbData[0])) {
-        //         // convert snake_case column names to camelCase
-        //         payload[key.replace(/([_]\w)/g, g => g[1].toUpperCase())] = value;
-        //     }
-        // } else {
-        //     // TODO ok to always assume 0?
-        //     payload = {
-        //         payloadType: 'WarningPayload',
-        //         metadata: {
-        //             totalResults: 0
-        //         }
-        //     }
-        // }
         
     } else {
         // TODO should always use query?

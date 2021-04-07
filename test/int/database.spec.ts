@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { getDrugs } from '../../src/api/getDrugs/main';
-import { ResourcePayload } from '../../src/shared/types';
+import { ResourceResponseBody } from '../../src/shared/types';
 import { poolsClosed, createDrug, readDrug } from '../../src/shared/mariaDao';
 
 describe('Database connectivity', function() {
@@ -75,24 +75,24 @@ describe('Database connectivity', function() {
             const res = await getDrugs(`${insertedDrugId}`);
 
             // ensure additional props were added
-            assert.ok(res.hasOwnProperty('payloadType'));
-            assert.ok(res.hasOwnProperty('metadata'));
+            assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('payloadType'));
+            assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('totalLength'));
 
             // check snake to camel
-            assert.ok(res.hasOwnProperty('nameBrand'));
-            assert.ok(res.hasOwnProperty('nameLabel'));
-            assert.ok(res.hasOwnProperty('dosageAmount'));
-            assert.ok(res.hasOwnProperty('dosageUnits'));
-            assert.ok(res.hasOwnProperty('deliveryMethod'));
+            assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('nameBrand'));
+            assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('nameLabel'));
+            assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('dosageAmount'));
+            assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('dosageUnits'));
+            assert.ok((res as ResourceResponseBody).payload.hasOwnProperty('deliveryMethod'));
 
             // ensure values are expected
-            assert.strictEqual(res.payloadType, 'ResourcePayload');
-            assert.strictEqual((res as ResourcePayload).metadata.totalResults, 1);
-            assert.strictEqual((res as ResourcePayload).id, insertedDrugId);
-            assert.strictEqual((res as ResourcePayload).rxcui, insertedDrug.rxcui);
-            assert.strictEqual((res as ResourcePayload).ndc, insertedDrug.ndc);
-            assert.strictEqual((res as ResourcePayload).dosageAmount, insertedDrug.dosageAmount);
-            assert.strictEqual((res as ResourcePayload).deliveryMethod, insertedDrug.deliveryMethod);
+            assert.strictEqual((res as ResourceResponseBody).metadata.payloadType, 'Resource');
+            assert.strictEqual((res as ResourceResponseBody).metadata.totalLength, 1);
+            assert.strictEqual((res as ResourceResponseBody).payload.id, insertedDrugId);
+            assert.strictEqual((res as ResourceResponseBody).payload.rxcui, insertedDrug.rxcui);
+            assert.strictEqual((res as ResourceResponseBody).payload.ndc, insertedDrug.ndc);
+            assert.strictEqual((res as ResourceResponseBody).payload.dosageAmount, insertedDrug.dosageAmount);
+            assert.strictEqual((res as ResourceResponseBody).payload.deliveryMethod, insertedDrug.deliveryMethod);
         })
     })
 

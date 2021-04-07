@@ -12,21 +12,30 @@ You also need to use that CMK to encrypt the DB username and password.
 
 Store those encryption strings in the terraform variables.
 
-# build/deploy
+# test/build/deploy
 
-Lambdas use a shared layer.
+Tests use npm, build and deploys use make.
+
+Simple unit tests with `npm run test`. 
+
+Integration test with a local mariadb docker image with `npm run test:int`.
+
+NPM packages and shared Lambda code is deployed as a lambda layer, which must get built first.
 
 ## TODO
+
+* proper drug data to insert on deploy
+* integrated test of get drugs method using that list
+* lambda for running the SQL
+    * hellow world in the private subnet
+    * test connection in the private subnet
+    * copy over sql
 
 * check RDS network
     * ACL
     * sec groups
 * check lambda -> rds connection
 * route 53
-* lambda db subnet access
-* refine lambdas, tsc, and test set up
-* db init sql script
-    * test locally on docker
 
 ### extended todos
 

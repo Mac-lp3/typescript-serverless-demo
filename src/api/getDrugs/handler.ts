@@ -1,11 +1,12 @@
 import { getDrugs } from './main';
-import { APIGatewayEvent, Context, Callback } from 'aws-lambda';
 import { buildResponseObject } from '../../shared/responseBuilder';
+import { APIGatewayEvent, Context, Callback } from 'aws-lambda';
 
 export async function handle(event: APIGatewayEvent, context: Context, callback: Callback) {
+    // TODO extract query params if any
     console.log('hi from the getDrugs lambda handler');
 
-    // TODO extrat query params if any
+    // TODO try/catch
     const payload = await getDrugs();
     const response = buildResponseObject(payload);
 

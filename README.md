@@ -6,40 +6,39 @@ It includes an API gateway, MariaDB RDS instance, and a GET lambda function.
 
 ## Notes
 
-Note, for the builds to work, you must have already created a CMK with the alias `alias/sl_api_cmk`.
+For the builds to work, you must have already created a CMK with the alias `alias/sl_api_cmk`.
 
-You also need to use that CMK to encrypt the DB username and password.
+Use that CMK to encrypt the DB username and password.
 
-Store those encryption strings in the terraform variables.
+Store those encrypted strings in the terraform variables.
 
 # test/build/deploy
 
-Tests use `npm`, build and deploy uses `make`.
+Tests use `npm`, build/deploys use `make`.
 
-Simple unit tests with `npm run test`. 
+Unit test with `npm run test`. 
 
-Integration test with a local mariadb docker image with `npm run test:int`.
+Integration test with `npm run test:int` (starts and sets up a local MariaDB docker container).
 
 NPM packages and shared Lambda code is deployed as a lambda layer, which must get built first.
 
 ## TODO
 
 * pattern for running SQL in lambda vs docker
-* create pool outside of handler
-* pass in query params to lambda
+    - SQL as env vars
+    - data/ path as placeholder
+    - placeholder replacement (local and cloud)
+    - incorperate into build
+    - cloud testing 
+        + ls & prints
+        + connect & run
+        + fix ACL/sec gorups/subnets/etc
 
+* create connection pool outside of handler
+* HTTP query params in lambda
 * confirm/test response body serialization
-
-* lambda for running the SQL
-    * hellow world in the private subnet
-    * test connection in the private subnet
-    * copy over sql
-
-* check RDS network
-    * ACL
-    * sec groups
-* check lambda -> rds connection
 * route 53
+* sqs event queue
 
 ### extended todos
 

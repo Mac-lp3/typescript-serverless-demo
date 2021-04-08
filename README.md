@@ -24,7 +24,10 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 
 ## TODO
 
-* end to end handler -> dao test
+* command to load in csv:
+    * start in bg container
+        * reuse the one in the package
+    * command w/ new container exec
 * create pool outside of handler
 * pass in query params
 

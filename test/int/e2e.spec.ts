@@ -18,7 +18,6 @@ describe('e2e getDrugs lambda', function() {
     }
 
     const normGetEvent: APIGatewayProxyEvent = {
-        headers: {},
         body: '',
         httpMethod: 'GET',
         isBase64Encoded: false,

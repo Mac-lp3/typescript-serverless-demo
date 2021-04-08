@@ -24,14 +24,9 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 
 ## TODO
 
-* command to load in csv:
-    * start in bg container
-        * reuse the one in the package
-    * command w/ new container exec
+* pattern for running SQL in lambda vs docker
 * create pool outside of handler
-* pass in query params
-
-* proper drug data to insert on deploy
+* pass in query params to lambda
 
 * confirm/test response body serialization
 

@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/*.ts",
-    "pretest:int": "docker run --rm -p 3306:3306 --name local-maria -e MYSQL_DATABASE=slapi -e MYSQL_ROOT_PASSWORD=admin -d mariadb && sleep 7 && docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < sql/init/tables.sql",
+    "maria:up": "docker run --rm -p 3306:3306 --name local-maria -e MYSQL_DATABASE=slapi -e MYSQL_ROOT_PASSWORD=admin -d mariadb && sleep 7 && docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < sql/init/tables.sql",
+    "maria:load": "docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < sql/init/loadDrugs.sql",
+    "maria:down": "docker container stop local-maria",
+    "pretest:int": "npm run maria:up && npm run maria:load",
     "test:int": "mocha --exit --timeout 99999 -r ts-node/register test/int/*.ts || echo 'failed?'",
-    "posttest:int": "docker container stop local-maria"
+    "posttest:int": "npm run maria:down"
   },
   "author": "",
   "license": "ISC",

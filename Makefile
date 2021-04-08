@@ -1,5 +1,25 @@
 build_dir = bin/build
 
+test_int:
+	# start mariad
+	docker run --rm -p 3306:3306 --name local-maria -e MYSQL_DATABASE=slapi -e MYSQL_ROOT_PASSWORD=admin -d mariadb
+
+	# give it a sec
+	sleep 7
+
+	# create tables
+	docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < sql/init/tables.sql
+
+	# copy data files to container
+	docker cp sql/data local-maria:/data
+
+	# load data into the tables (after replacing paths)
+	docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < sql/init/loadDrugs.sql
+
+	# run the tests
+
+	# stop local-maria
+
 build_nodejs_layer:
 	# clean up
 	rm -rf $(build_dir)/nodejs $(build_dir)/nodejs.zip

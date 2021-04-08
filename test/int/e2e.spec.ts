@@ -6,16 +6,27 @@ import { poolsClosed, createDrug, readDrug } from '../../src/shared/mariaDao';
 
 describe('e2e getDrugs lambda', function() {
 
-    let insertedDrugId: number;
-    const insertedDrug = {
-        ndc: '987-43123123',
-        rxcui: '877292000',
-        nameBrand: 'oof',
-        nameLabel: 'wow',
-        dosageAmount: 1,
-        dosageUnits: 'LB',
-        deliveryMethod: 'pills',
-    }
+    // let insertedDrugId: number;
+    // const insertedDrug = {
+    //     ndc: '987-43123123',
+    //     rxcui: '877292000',
+    //     nameBrand: 'oof',
+    //     nameLabel: 'wow',
+    //     dosageAmount: 1,
+    //     dosageUnits: 'LB',
+    //     deliveryMethod: 'pills',
+    // }
+
+    const abnormGetEvent: APIGatewayProxyEvent = {
+        body: '',
+        httpMethod: 'GET',
+        isBase64Encoded: false,
+        path: '',
+        pathParameters: {
+            id: 1337
+        },
+        queryStringParameters: {}
+    } as any
 
     const normGetEvent: APIGatewayProxyEvent = {
         body: '',
@@ -23,7 +34,7 @@ describe('e2e getDrugs lambda', function() {
         isBase64Encoded: false,
         path: '',
         pathParameters: {
-            id: 1 // TODO this needs to be set
+            id: 1
         },
         queryStringParameters: {}
     } as any
@@ -41,17 +52,17 @@ describe('e2e getDrugs lambda', function() {
         process.env.DB_PASSWORD_ENC = 'admin';
 
         // insert a test drug
-        const res = await createDrug(
-            insertedDrug.ndc,
-            insertedDrug.rxcui,
-            insertedDrug.nameBrand,
-            insertedDrug.nameLabel,
-            insertedDrug.dosageAmount,
-            insertedDrug.dosageUnits,
-            insertedDrug.deliveryMethod
-        )
+        // const res = await createDrug(
+        //     insertedDrug.ndc,
+        //     insertedDrug.rxcui,
+        //     insertedDrug.nameBrand,
+        //     insertedDrug.nameLabel,
+        //     insertedDrug.dosageAmount,
+        //     insertedDrug.dosageUnits,
+        //     insertedDrug.deliveryMethod
+        // )
 
-        insertedDrugId = res.insertId;
+        // insertedDrugId = res.insertId;
     })
 
     after(async function() {
@@ -70,17 +81,16 @@ describe('e2e getDrugs lambda', function() {
         assert.strictEqual(response.statusCode, 201);
         assert.strictEqual(bod.metadata.payloadType, 'Resource');
         assert.strictEqual(bod.metadata.totalLength, 1);
-        
-        // TODO this is not guarenteed
         assert.strictEqual(bod.payload.id, 1);
     })
 
-    it('should load drugs by id', async function() {
-       // TODO tests for proper query/path params
-    })
-
     it('should NOT find a missing drug id', async function() {
+        const response = await handle(abnormGetEvent, normGetContext);
+        const bod = JSON.parse(response.body);
 
+        assert.strictEqual(response.statusCode, 404);
+        assert.strictEqual(bod.metadata.totalLength, 0);
+        assert.strictEqual(Object.getOwnPropertyNames(bod.payload).length, 0);
     })
 
 })

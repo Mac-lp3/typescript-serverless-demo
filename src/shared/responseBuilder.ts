@@ -7,20 +7,26 @@ import { ErrorPayload, WarningPayload, ResourceResponseBody } from '../shared/ty
  * @param payload 
  * @returns
  */
-export function buildResponseObject(payload: ErrorPayload | WarningPayload | ResourceResponseBody): ProxyResult {
+export function buildResponseObject(respBody: ErrorPayload | WarningPayload | ResourceResponseBody): ProxyResult {
 
     let body: string;
     let statusCode: number;
 
-    if (isAnError(payload)) {
-        statusCode = 404;
-        body = JSON.stringify(payload);
-    } else if (isAResource(payload)) {
-        statusCode = 201;
-        body = JSON.stringify(payload);
+    if (isAnError(respBody)) {
+
+        statusCode = 501;
+        body = JSON.stringify(respBody);
+
+    } else if (isAResource(respBody)) {
+
+        statusCode = respBody.metadata.totalLength > 0 ? 201 : 404;
+        body = JSON.stringify(respBody);
+
     } else {
+
         statusCode = 500;
         body = 'omg';
+
     }
 
     const response: ProxyResult = {

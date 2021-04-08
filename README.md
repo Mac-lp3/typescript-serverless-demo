@@ -35,6 +35,10 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
         + fix ACL/sec gorups/subnets/etc
 
 * create connection pool outside of handler
+    - update tests to use the new builder
+    - convert get to use builder
+    - update handler tests
+
 * HTTP query params in lambda
 * confirm/test response body serialization
 * route 53

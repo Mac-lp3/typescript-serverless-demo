@@ -67,6 +67,7 @@ resource "aws_lambda_function" "rds_setup" {
       DB_NAME         = var.db_name
       DB_HOST         = var.db_host
       DB_PORT         = var.db_port
+      DATA_FILE_DIR   = var.data_file_dir
       # SQL_SCRIPT = "${replace(trimspace(data.template_file.sql_script.rendered), "/\n/", " ")}"
     }
   }

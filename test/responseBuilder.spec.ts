@@ -23,7 +23,7 @@ describe('buildResponseObject function', function() {
 
     });
 
-    it('should return a 4XX when not good', function() {
+    it('should return a 5XX when not good', function() {
 
         let tmp: ErrorPayload;
         tmp = {
@@ -34,7 +34,7 @@ describe('buildResponseObject function', function() {
         }
 
         const res = buildResponseObject(tmp);
-        assert.strictEqual(res.statusCode, 404);
+        assert.strictEqual(res.statusCode, 501);
 
     });
 

@@ -1,13 +1,83 @@
-import { createPool, Pool, PoolConnection } from 'mariadb';
+import { SlapiDao } from './types';
 import { getValue } from './environment';
+import { createPool, Pool, PoolConnection } from 'mariadb';
 
-class MariaDao {
+class MariaDao implements SlapiDao {
+
+    private sharedPool: Pool;
+
+    constructor(pool: Pool) {
+        this.sharedPool = pool;
+    }
+
+    private async getConnection(): Promise<PoolConnection> {
+        const conn = await this.sharedPool.getConnection();
+        return conn;
+    }
+
+    public closePool() {
+        this.sharedPool.end();
+    }
+
+    public async listTables() {
+        const conn = await getConnection();
+        const raw = await conn.query('SHOW TABLES');
+
+        conn.release();
+        return raw;
+    }
+    
+    public async queryDrugs(queryTerm: string) {
+        // TODO
+        const retVal: any[] = [];
+        return retVal;
+    }
+    
+    public async readDrug(id: number) {
+        const conn = await this.getConnection();
+        const raw = await conn.query(
+            'SELECT * FROM drugs WHERE id = ?',
+            [id]
+        );
+
+        conn.release();
+        return raw;
+    }
+    
+    public async createDrug(
+        ndc: string,
+        rxcui: string,
+        nameBrand: string,
+        nameLabel: string,
+        dosageAmount: number,
+        dosageUnits: string,
+        deliveryMethod: string
+    ) {
+        const conn = await this.getConnection();
+        const raw = await conn.query(
+            'INSERT INTO drugs (ndc, rxcui, name_brand, name_label, dosage_amount, dosage_units, delivery_method) ' +
+            'VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [ndc, rxcui, nameBrand, nameLabel, dosageAmount, dosageUnits, deliveryMethod]
+        );
+
+        conn.release();
+        return raw;
+    }
+
+}
+
+export async function build(): Promise<MariaDao> {
+
+    console.log('Building a fresh MariaDao');
+    const thePool = await buildConnectionPool();
+    const daoInstance = new MariaDao(thePool);
+    return daoInstance;
 
 }
 
 let sharedPool: Pool = undefined;
 
-async function buildConnectionPool(): Promise<Pool> {
+export async function buildConnectionPool(): Promise<Pool> {
 
     const DB_NAME = getValue('DB_NAME');
     const DB_HOST = getValue('DB_HOST');

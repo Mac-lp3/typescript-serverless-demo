@@ -31,6 +31,9 @@ build_nodejs_layer:
 	# copy in shared/ and the npm stuff
 	cp package.json package-lock.json $(build_dir)/nodejs
 	cp -r $(build_dir)/src/shared $(build_dir)/nodejs/shared
+
+	# copy in csv data files
+	cp -R sql/data $(build_dir)/nodejs/data
 	
 	# cd in, npm install, and zip
 	cd $(build_dir)/nodejs && npm install --only=production

@@ -1,8 +1,27 @@
+export interface SlapiDao {
+    queryDrugs: {
+        (queryTerm: string): Promise<any[]>
+    };
+
+    createDrug: {
+        (ndc: string,
+        rxcui: string,
+        nameBrand: string,
+        nameLabel: string,
+        dosageAmount: number,
+        dosageUnits: string,
+        deliveryMethod: string): Promise<any> 
+    };
+
+    readDrug: {
+        (id: number): Promise<any>
+    };
+}
+
 /**
  * These types tell the response builder what values go where.
  * All main.ts functions should return an implementation of these.
  */
-
 interface BasePayload {
     readonly payloadType: string;
 };

@@ -2,6 +2,7 @@ node_modules/
 .vscode/
 bin/build/
 bin/build.map
+tmp/
 .terraform
 .terraform.*
 terraform.*

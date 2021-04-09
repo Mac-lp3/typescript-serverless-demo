@@ -16,6 +16,10 @@ export interface SlapiDao {
     readDrug: {
         (id: number): Promise<any>
     };
+
+    exec: {
+        (sqlStatement: string): Promise<any>
+    };
 }
 
 /**

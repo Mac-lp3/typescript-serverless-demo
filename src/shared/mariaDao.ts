@@ -19,6 +19,11 @@ class MariaDao implements SlapiDao {
         this.sharedPool.end();
     }
 
+    public async exec(sqlStatement: string) {
+        let ret: any = {};
+        return ret;
+    }
+
     public async listTables() {
         const conn = await getConnection();
         const raw = await conn.query('SHOW TABLES');

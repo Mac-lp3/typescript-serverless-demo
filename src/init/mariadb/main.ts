@@ -6,6 +6,7 @@ export async function initMaria(dao: SlapiDao) {
     // where are the sql statements?
         // env var?
             // that could work. small enough statements...
+            // try to cat into a var in the before
 
     // run create table
     // run load table

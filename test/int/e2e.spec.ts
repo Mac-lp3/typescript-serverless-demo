@@ -6,17 +6,6 @@ import { poolsClosed, createDrug, readDrug } from '../../src/shared/mariaDao';
 
 describe('e2e getDrugs lambda', function() {
 
-    // let insertedDrugId: number;
-    // const insertedDrug = {
-    //     ndc: '987-43123123',
-    //     rxcui: '877292000',
-    //     nameBrand: 'oof',
-    //     nameLabel: 'wow',
-    //     dosageAmount: 1,
-    //     dosageUnits: 'LB',
-    //     deliveryMethod: 'pills',
-    // }
-
     const abnormGetEvent: APIGatewayProxyEvent = {
         body: '',
         httpMethod: 'GET',
@@ -50,19 +39,6 @@ describe('e2e getDrugs lambda', function() {
         process.env.DB_PORT = '3306';
         process.env.DB_USERNAME_ENC = 'root';
         process.env.DB_PASSWORD_ENC = 'admin';
-
-        // insert a test drug
-        // const res = await createDrug(
-        //     insertedDrug.ndc,
-        //     insertedDrug.rxcui,
-        //     insertedDrug.nameBrand,
-        //     insertedDrug.nameLabel,
-        //     insertedDrug.dosageAmount,
-        //     insertedDrug.dosageUnits,
-        //     insertedDrug.deliveryMethod
-        // )
-
-        // insertedDrugId = res.insertId;
     })
 
     after(async function() {
@@ -71,7 +47,7 @@ describe('e2e getDrugs lambda', function() {
         delete process.env.DB_USERNAME_ENC;
         delete process.env.DB_PASSWORD_ENC;
 
-        poolsClosed();
+        //poolsClosed();
     })
 
     it('should get a drug given a good ID', async function() {

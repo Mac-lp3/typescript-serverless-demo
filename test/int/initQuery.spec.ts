@@ -1,11 +1,12 @@
-import { open } from 'fs/promises';
-import * as maria from 'mariadb';
 import * as assert from 'assert';
-import { ImportMock } from 'ts-mock-imports';
-import { SlapiDao } from '../src/shared/types';
-import * as daoMod from '../src/shared/mariaDao';
+import { join } from 'path';
+import { open } from 'fs/promises';
+import { SlapiDao } from '../../src/shared/types';
+import { build } from '../../src/shared/mariaDao';
 
 describe('The maria dao and its builder', function() {
+
+    let dao: SlapiDao;
 
     before(async function() {
         // see test:int script in package.json
@@ -15,12 +16,17 @@ describe('The maria dao and its builder', function() {
         process.env.DB_PASSWORD_ENC = 'admin';
         process.env.DATA_FILE_DIR = 'sql/data/drugs.csv';
 
-        // read the SQL files into env vars
-        const tablesFilehandle = await open('sql/init/tables.sql', 'r');
-        process.env.INIT_TABLES_SQL = await tablesFilehandle.readFile('utf-8');
-
+        // read the SQL files into env vars (normally done via teraform)
+        const tablesFilehandle = await open('tmp/sql/init/tables.sql', 'r');
         const loadFilehandle = await open('sql/init/loadDrugs.sql', 'r');
+        process.env.INIT_TABLES_SQL = await tablesFilehandle.readFile('utf-8');
         process.env.LOAD_TABLES_SQL = await loadFilehandle.readFile('utf-8');
+
+        // replacement should be done as part of the build. required here for testing.
+        const dataPath = join(__dirname, '../../sql/data');
+        process.env.LOAD_TABLES_SQL = process.env.LOAD_TABLES_SQL.replace('@DATA_DIR', dataPath);
+
+        dao = await build();
     })
 
     after(function() {
@@ -30,22 +36,15 @@ describe('The maria dao and its builder', function() {
         delete process.env.DB_PASSWORD_ENC;
         delete process.env.DATA_FILE_DIR;
         delete process.env.INIT_TABLES_SQL;
-    })
-
-    it('should return a SlapiDao impl', async function() {
-
-        // stub the buildConnectionPool
-        const mockPool: maria.Pool = { end: () => console.log('mocking end') } as maria.Pool;
-        const stub = ImportMock.mockFunction(maria, 'createPool', mockPool);
-        const impl = await daoMod.build();
-
-        assert.strictEqual(stub.callCount, 1);
-
-        ImportMock.restore();
+        //dao.close();
     })
 
     it('should format sql statements correctly', async function() {
         console.log(`${process.env.LOAD_TABLES_SQL}`)
+        
+        const rez = await dao.exec(process.env.LOAD_TABLES_SQL);
+
+        console.log(rez)
     })
 
 })

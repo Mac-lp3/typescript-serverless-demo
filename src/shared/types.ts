@@ -20,6 +20,10 @@ export interface SlapiDao {
     exec: {
         (sqlStatement: string): Promise<any>
     };
+
+    close: {
+        (): void;
+    }
 }
 
 /**

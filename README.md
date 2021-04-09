@@ -26,7 +26,6 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 
 * pattern for running SQL in lambda vs docker
     - SQL as env vars
-    - data/ path as placeholder
     - placeholder replacement (local and cloud)
     - incorperate into build
     - cloud testing 

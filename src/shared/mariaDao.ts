@@ -15,13 +15,24 @@ class MariaDao implements SlapiDao {
         return conn;
     }
 
-    public closePool() {
+    public close() {
         this.sharedPool.end();
     }
 
     public async exec(sqlStatement: string) {
-        let ret: any = {};
-        return ret;
+        const conn = await getConnection();
+
+        // const raw = await conn.query(`${sqlStatement}`);
+        // TODO
+        const raw = await conn.query(`
+            LOAD DATA LOCAL INFILE ?
+            INTO TABLE drugs FIELDS TERMINATED BY ","
+            (ndc, rxcui, name_brand, name_label, dosage_amount, dosage_units, delivery_method);
+        `, ['/home/staticlp3/src/sl-api/sql/data/drugs.csv']
+        );
+
+        conn.release();
+        return raw;
     }
 
     public async listTables() {
@@ -103,7 +114,8 @@ export async function buildConnectionPool(): Promise<Pool> {
             port: Number(vals[2]),
             user: vals[3], 
             password: vals[4],
-            connectionLimit: 3
+            connectionLimit: 3,
+            permitLocalInfile: true
         });
     });
 

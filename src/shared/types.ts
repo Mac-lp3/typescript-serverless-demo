@@ -17,6 +17,10 @@ export interface SlapiDao {
         (id: number): Promise<any>
     };
 
+    listTables: {
+        (): Promise<any>
+    };
+
     exec: {
         (sqlStatement: string): Promise<any>
     };

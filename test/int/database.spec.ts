@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { getDrugs } from '../../src/api/getDrugs/main';
 import { ResourceResponseBody } from '../../src/shared/types';
-import { poolsClosed, createDrug, readDrug } from '../../src/shared/mariaDao';
+import { poolsClosed, createDrug, readDrug, build } from '../../src/shared/mariaDao';
 
 describe('Database connectivity', function() {
 
@@ -32,7 +32,15 @@ describe('Database connectivity', function() {
         //poolsClosed();
     })
 
-    describe('Dao methods', function() {
+    describe('maria DAO methods', function() {
+
+        it('should list tables properly', async function() {
+            const maria = await build();
+            const tables = await maria.listTables();
+
+            console.log(tables);
+        })
+
         it('should insert a drug', async function() {
             const res = await createDrug(
                 insertedDrug.ndc,

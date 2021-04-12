@@ -9,3 +9,8 @@ CREATE TABLE drugs (
     delivery_method VARCHAR(15),
     PRIMARY KEY (id)
 );
+
+CREATE TABLE tester (
+    id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY (id)
+);

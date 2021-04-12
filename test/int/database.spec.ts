@@ -40,7 +40,7 @@ describe('Database connectivity', function() {
         it('should list tables properly', async function() {
             const tables = await mariaDao.listTables();
 
-            console.log(tables);
+            console.log(tables); // TODO how to convert to a list of table names
         })
 
         it('should insert a drug', async function() {

@@ -20,7 +20,8 @@ export async function initMaria(dao: SlapiDao) {
     */
     
     // get the list of tables already in the DB
-    const tableList = await dao.listTables(); // TODO format
+    const rawTableList = await dao.listTables();
+    const tableList = []; // TODO build from raw
 
     // get list of folders in the init directory
     const initSQLDir = await getValue('INIT_SQL_DIR');

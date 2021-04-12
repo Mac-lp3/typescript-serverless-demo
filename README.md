@@ -44,7 +44,7 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
         + connect & run
         + fix ACL/sec gorups/subnets/etc
 
-
+* update handler to init and pass in the maria dao
 
 * create connection pool outside of handler
     - update tests to use the new builder

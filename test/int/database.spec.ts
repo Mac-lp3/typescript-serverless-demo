@@ -1,10 +1,11 @@
 import * as assert from 'assert';
 import { getDrugs } from '../../src/api/getDrugs/main';
-import { ResourceResponseBody } from '../../src/shared/types';
+import { ResourceResponseBody, SlapiDao } from '../../src/shared/types';
 import { poolsClosed, createDrug, readDrug, build } from '../../src/shared/mariaDao';
 
 describe('Database connectivity', function() {
 
+    let mariaDao: SlapiDao;
     let insertedDrugId: number;
     const insertedDrug = {
         ndc: '01-123123123',
@@ -16,12 +17,14 @@ describe('Database connectivity', function() {
         deliveryMethod: 'tabs',
     }
 
-    before(function() {
+    before(async function() {
         // see test:int script in package.json 
         process.env.DB_NAME = 'slapi';
         process.env.DB_PORT = '3306';
         process.env.DB_USERNAME_ENC = 'root';
         process.env.DB_PASSWORD_ENC = 'admin';
+
+        mariaDao = await build();
     })
 
     after(async function() {
@@ -35,14 +38,14 @@ describe('Database connectivity', function() {
     describe('maria DAO methods', function() {
 
         it('should list tables properly', async function() {
-            const maria = await build();
-            const tables = await maria.listTables();
+            const tables = await mariaDao.listTables();
 
             console.log(tables);
         })
 
         it('should insert a drug', async function() {
-            const res = await createDrug(
+            
+            const res = await mariaDao.createDrug(
                 insertedDrug.ndc,
                 insertedDrug.rxcui,
                 insertedDrug.nameBrand,
@@ -59,7 +62,7 @@ describe('Database connectivity', function() {
     
         it('should load drugs by id', async function() {
             // MUST RUN AFTER THE INSERT TEST
-            const res = await readDrug(insertedDrugId);
+            const res = await mariaDao.readDrug(insertedDrugId);
             assert.ok(Array.isArray(res));
             assert.strictEqual(res.length, 1);
             assert.strictEqual(res[0].id, insertedDrugId);
@@ -70,7 +73,7 @@ describe('Database connectivity', function() {
     
         it('should NOT find a missing drug id', async function() {
             // MUST RUN AFTER THE INSERT TEST
-            const res = await readDrug(insertedDrugId + 1);
+            const res = await mariaDao.readDrug(insertedDrugId + 1);
             assert.ok(Array.isArray(res));
             assert.strictEqual(res.length, 0);
         })

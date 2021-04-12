@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register test/*.ts",
-    "maria:sed": "mkdir -p tmp/sql/init && find sql/init/ -type f | xargs -I {} sh -c \"sed 's|@DATA_DIR|\"/data\"|g' {} > tmp/{} \"",
+    "maria:sed": "mkdir -p tmp/sql/init/drugs && find sql/init/ -type f | xargs -I {} sh -c \"sed 's|@DATA_DIR|\"/data\"|g' {} > tmp/{} \"",
     "maria:up": "docker run --rm -p 3306:3306 --name local-maria -e MYSQL_DATABASE=slapi -e MYSQL_ROOT_PASSWORD=admin -d mariadb && sleep 7 && docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < tmp/sql/init/tables.sql",
     "maria:load": "docker cp sql/data local-maria:/data && docker exec -i local-maria sh -c 'exec mysql -uroot -padmin slapi' < tmp/sql/init/loadDrugs.sql",
     "maria:down": "rm -rf tmp && docker container stop local-maria",

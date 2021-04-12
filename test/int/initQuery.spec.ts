@@ -26,6 +26,8 @@ describe('The maria dao and its builder', function() {
         const dataPath = join(__dirname, '../../sql/data');
         process.env.LOAD_TABLES_SQL = process.env.LOAD_TABLES_SQL.replace('@DATA_DIR', dataPath);
 
+        process.env.INIT_SQL_DIR = 'sql/init/'; // in prod, this is set in terraform
+
         dao = await build();
     })
 

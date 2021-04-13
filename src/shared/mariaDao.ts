@@ -35,12 +35,17 @@ class MariaDao implements SlapiDao {
         return raw;
     }
 
-    public async listTables() {
+    public async listTables(returnRaw?: boolean) {
         const conn = await getConnection();
-        const raw = await conn.query('SHOW TABLES');
+        let returnList = await conn.query('SHOW TABLES');
 
         conn.release();
-        return raw;
+
+        if (!returnRaw) {
+            returnList = this.convertRawTableListToStrings(returnList);
+        }
+
+        return returnList;
     }
     
     public async queryDrugs(queryTerm: string) {
@@ -78,6 +83,24 @@ class MariaDao implements SlapiDao {
 
         conn.release();
         return raw;
+    }
+
+    /**
+     * 
+     * @param raw object returned by the maria db api
+     */
+    protected convertRawTableListToStrings(raw: any[]): string[] {
+
+        const tblNames: string[] = [];
+        raw.forEach(tbl => {
+            // key is a string of format: 'Table_in_<DB NAME>'
+            // val is the name of that table
+            for (const [key, val] of Object.entries(tbl)) {
+                tblNames.push(val as string);
+            }
+        });
+
+        return tblNames;
     }
 
 }

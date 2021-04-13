@@ -20,8 +20,7 @@ export async function initMaria(dao: SlapiDao) {
     */
     
     // get the list of tables already in the DB
-    const rawTableList = await dao.listTables();
-    const tableList = []; // TODO build from raw
+    const tableNameList = await dao.listTables();
 
     // get list of folders in the init directory
     const initSQLDir = await getValue('INIT_SQL_DIR');
@@ -29,10 +28,17 @@ export async function initMaria(dao: SlapiDao) {
     const dirNames = dirents.filter(dir => dir.isDirectory()).map(dir => dir.name);
 
     dirNames.forEach(dirName => {
+
         // does the table already exist?
-        const exists = false;
+        const exists = tableNameList.indexOf(dirName) > -1;
 
         // create it if not
+        if(!exists) {
+            // exec that SQL
+            console.log(`${initSQLDir}/${dirName}/create.sql`);
+        }
+
+        console.log(`${initSQLDir}/${dirName}/create.sql`);
     });
     
 }

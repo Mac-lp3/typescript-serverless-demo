@@ -18,7 +18,7 @@ export interface SlapiDao {
     };
 
     listTables: {
-        (): Promise<any>
+        (returnRaw?: boolean): Promise<any>
     };
 
     exec: {

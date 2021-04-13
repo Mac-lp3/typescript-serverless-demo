@@ -3,6 +3,7 @@ import { join } from 'path';
 import { open } from 'fs/promises';
 import { SlapiDao } from '../../src/shared/types';
 import { build } from '../../src/shared/mariaDao';
+import { initMaria } from '../../src/init/mariadb/main';
 
 describe('The maria dao and its builder', function() {
 
@@ -26,7 +27,7 @@ describe('The maria dao and its builder', function() {
         const dataPath = join(__dirname, '../../sql/data');
         process.env.LOAD_TABLES_SQL = process.env.LOAD_TABLES_SQL.replace('@DATA_DIR', dataPath);
 
-        process.env.INIT_SQL_DIR = 'sql/init/'; // in prod, this is set in terraform
+        process.env.INIT_SQL_DIR = 'sql/init'; // in prod, this is set in terraform
 
         dao = await build();
     })
@@ -42,11 +43,13 @@ describe('The maria dao and its builder', function() {
     })
 
     it('should format sql statements correctly', async function() {
-        console.log(`${process.env.LOAD_TABLES_SQL}`)
+        // console.log(`${process.env.LOAD_TABLES_SQL}`)
         
-        const rez = await dao.exec(process.env.LOAD_TABLES_SQL);
+        // const rez = await dao.exec(process.env.LOAD_TABLES_SQL);
 
-        console.log(rez)
+        // console.log(rez);
+
+        await initMaria(dao);
     })
 
 })

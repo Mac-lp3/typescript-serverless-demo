@@ -31,13 +31,19 @@ describe('The maria dao and its builder', function() {
     })
 
     it('should format sql statements correctly', async function() {
-        // TODO get table list before
+        
+        // ensure the plans table is not there
+        let tables = await dao.listTables();
+        assert.strictEqual(tables.indexOf('plans'), -1);
+        assert.strictEqual(tables.indexOf('drugs'), -1);
 
         await initMaria(dao);
         
-        // TODO get table list after
-        // TODO ensure table list includes plans
-        // TODO ensure there is an entry in plans
+        // ensure the plans & drugs tables is there now
+        tables = await dao.listTables();
+        assert.ok(tables.indexOf('plans') > -1);
+        assert.ok(tables.indexOf('drugs') > -1);
+
     })
 
 })

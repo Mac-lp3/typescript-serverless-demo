@@ -2,22 +2,20 @@ import { readdir, open, stat } from 'fs/promises';
 import { SlapiDao } from '../../shared/types';
 import { getValue } from '../../shared/environment';
 
+/**
+ * Runs DB initialization logic, including table creation and loading initial data.
+ * 
+ * Relies on the INIT_SQL_DIR environment var to find these files.
+ * 
+ * Assumes the initialization files follow the folder pattern:
+ * INIT_SQL_DIR/sql/init/TABLE_NAME/
+ *  |-  create.sql
+ *  |-  load.sql
+ *  `-  data.csv
+ * 
+ * @param dao 
+ */
 export async function initMaria(dao: SlapiDao) {
-
-    /*
-    [pwd | /opt/nodejs]/sql/init/drugs/
-        |-  create.sql
-        |-  load.sql
-        `-  data.csv
-
-    - get list of tables in db
-    - get list of folders in sql/init/. For each:
-        + folderName NOT in DB list:
-            + run folderName/create.sql
-            + has a load file?
-                + sed folderName/load.sql with data.csv path
-                + run folderName/load.sql'
-    */
     
     // get the list of tables already in the DB
     const tableNameList = await dao.listTables();
@@ -37,28 +35,28 @@ export async function initMaria(dao: SlapiDao) {
 
         // create it if not
         if(!exists) {
+
             // exec create SQL
             filehandle = await open(`${initSQLDir}/${dirNames[i]}/create.sql`, 'r');
             tmpSQL = await filehandle.readFile('utf-8');
+            await filehandle.close();
             await dao.exec(tmpSQL);
 
             // check if there is data to load
             try {
-                await stat(`${initSQLDir}/${dirNames[i]}/load.sql`);
 
                 // load it if so
                 filehandle = await open(`${initSQLDir}/${dirNames[i]}/load.sql`, 'r');
                 tmpSQL = await filehandle.readFile('utf-8');
-                tmpSQL = tmpSQL.replace('@DATA_DIR', '?');
+                await filehandle.close();
+                tmpSQL = tmpSQL.replace('@DATA_FILE', '?');
 
                 await dao.exec(tmpSQL, [`${initSQLDir}/${dirNames[i]}/data.csv`]);
 
-            } catch {
-
+            } catch (ex) {
+                // assume load.sql did not exist
+                console.log(`Did not find a load.sql for table: ${dirNames[i]}`);
             }
-            
         }
-
     }
-    
 }

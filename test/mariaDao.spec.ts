@@ -14,13 +14,6 @@ describe('The maria dao and its builder', function() {
         process.env.DB_USERNAME_ENC = 'root';
         process.env.DB_PASSWORD_ENC = 'admin';
         process.env.DATA_FILE_DIR = 'sql/data/drugs.csv';
-
-        // read the SQL files into env vars
-        const tablesFilehandle = await open('sql/init/tables.sql', 'r');
-        process.env.INIT_TABLES_SQL = await tablesFilehandle.readFile('utf-8');
-
-        const loadFilehandle = await open('sql/init/loadDrugs.sql', 'r');
-        process.env.LOAD_TABLES_SQL = await loadFilehandle.readFile('utf-8');
     })
 
     after(function() {

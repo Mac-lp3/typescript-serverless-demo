@@ -39,8 +39,7 @@ describe('Database connectivity', function() {
 
         it('should list tables properly', async function() {
             const tables = await mariaDao.listTables();
-
-            console.log(tables); // TODO how to convert to a list of table names
+            assert.ok(tables.indexOf('drugs') > -1);
         })
 
         it('should insert a drug', async function() {

@@ -3,7 +3,7 @@ import * as maria from 'mariadb';
 import * as assert from 'assert';
 import { ImportMock } from 'ts-mock-imports';
 import { SlapiDao } from '../src/shared/types';
-import * as daoMod from '../src/shared/mariaDao';
+import { MariaDao } from '../src/shared/mariaDao';
 
 describe('The maria dao and its builder', function() {
 
@@ -30,7 +30,7 @@ describe('The maria dao and its builder', function() {
         // stub the buildConnectionPool
         const mockPool: maria.Pool = { end: () => console.log('mocking end') } as maria.Pool;
         const stub = ImportMock.mockFunction(maria, 'createPool', mockPool);
-        const impl = await daoMod.build();
+        const impl = await MariaDao.build();
 
         assert.strictEqual(stub.callCount, 1);
 

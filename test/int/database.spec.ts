@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { getDrugs } from '../../src/api/getDrugs/main';
 import { ResourceResponseBody, SlapiDao } from '../../src/shared/types';
-import { poolsClosed, createDrug, readDrug, build } from '../../src/shared/mariaDao';
+import { MariaDao } from '../../src/shared/mariaDao';
 
 describe('Database connectivity', function() {
 
@@ -24,7 +24,7 @@ describe('Database connectivity', function() {
         process.env.DB_USERNAME_ENC = 'root';
         process.env.DB_PASSWORD_ENC = 'admin';
 
-        mariaDao = await build();
+        mariaDao = await MariaDao.build();
     })
 
     after(async function() {
@@ -32,7 +32,7 @@ describe('Database connectivity', function() {
         delete process.env.DB_PORT;
         delete process.env.DB_USERNAME_ENC;
         delete process.env.DB_PASSWORD_ENC;
-        //poolsClosed();
+        await mariaDao.close();
     })
 
     describe('maria DAO methods', function() {
@@ -82,7 +82,7 @@ describe('Database connectivity', function() {
     describe('getDrugs method', function() {
         it('should return a drug given a proper id', async function() {
             // call it
-            const res = await getDrugs(`${insertedDrugId}`);
+            const res = await getDrugs(mariaDao, `${insertedDrugId}`);
 
             // ensure additional props were added
             assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('payloadType'));

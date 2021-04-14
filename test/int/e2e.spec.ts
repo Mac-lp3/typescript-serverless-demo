@@ -2,7 +2,6 @@ import * as assert from 'assert';
 import { APIGatewayProxyEvent, Context } from 'aws-lambda';
 import { handle } from '../../src/api/getDrugs/handler';
 import { ResourceResponseBody } from '../../src/shared/types';
-import { poolsClosed, createDrug, readDrug } from '../../src/shared/mariaDao';
 
 describe('e2e getDrugs lambda', function() {
 
@@ -42,15 +41,15 @@ describe('e2e getDrugs lambda', function() {
     })
 
     after(async function() {
-        delete process.env.DB_NAME;
-        delete process.env.DB_PORT;
-        delete process.env.DB_USERNAME_ENC;
-        delete process.env.DB_PASSWORD_ENC;
 
-        //poolsClosed();
     })
 
     it('should get a drug given a good ID', async function() {
+        process.env.DB_NAME = 'slapi';
+        process.env.DB_PORT = '3306';
+        process.env.DB_USERNAME_ENC = 'root';
+        process.env.DB_PASSWORD_ENC = 'admin';
+
         const response = await handle(normGetEvent, normGetContext);
         const bod = JSON.parse(response.body);
 

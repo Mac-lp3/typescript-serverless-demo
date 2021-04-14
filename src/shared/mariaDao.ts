@@ -2,7 +2,7 @@ import { SlapiDao } from './types';
 import { getValue } from './environment';
 import { createPool, Pool, PoolConnection } from 'mariadb';
 
-class MariaDao implements SlapiDao {
+export class MariaDao implements SlapiDao {
 
     private sharedPool: Pool;
 
@@ -15,7 +15,7 @@ class MariaDao implements SlapiDao {
         return conn;
     }
 
-    public close() {
+    public async close() {
         this.sharedPool.end();
     }
 
@@ -27,7 +27,7 @@ class MariaDao implements SlapiDao {
      */
     public async exec(sqlStatement: string, options?: any) {
 
-        const conn = await getConnection();
+        const conn = await this.getConnection();
 
         let raw;
         if (options) {
@@ -41,7 +41,7 @@ class MariaDao implements SlapiDao {
     }
 
     public async listTables(returnRaw?: boolean) {
-        const conn = await getConnection();
+        const conn = await this.getConnection();
         let returnList = await conn.query('SHOW TABLES');
 
         conn.release();
@@ -108,99 +108,29 @@ class MariaDao implements SlapiDao {
         return tblNames;
     }
 
-}
-
-export async function build(): Promise<MariaDao> {
-
-    console.log('Building a fresh MariaDao');
-    const thePool = await buildConnectionPool();
-    const daoInstance = new MariaDao(thePool);
-    return daoInstance;
-
-}
-
-let sharedPool: Pool = undefined;
-
-export async function buildConnectionPool(): Promise<Pool> {
-
-    const DB_NAME = getValue('DB_NAME');
-    const DB_HOST = getValue('DB_HOST');
-    const DB_PORT = getValue('DB_PORT');
-    const DB_USERNAME = getValue('DB_USERNAME_ENC');
-    const DB_PASSWORD = getValue('DB_PASSWORD_ENC');
-
-    return Promise.all([
-        DB_HOST,
-        DB_NAME,
-        DB_PORT,
-        DB_USERNAME,
-        DB_PASSWORD
-    ]).then(vals => {
-        return createPool({
-            host: vals[0],
-            database: vals[1],
-            port: Number(vals[2]),
-            user: vals[3], 
-            password: vals[4],
-            connectionLimit: 3,
-            permitLocalInfile: true
+    public static async build(): Promise<MariaDao> {
+        console.log('Building a fresh MariaDao');
+  
+        const thePool = Promise.all([
+            getValue('DB_HOST'),
+            getValue('DB_NAME'),
+            getValue('DB_PORT'),
+            getValue('DB_USERNAME_ENC'),
+            getValue('DB_PASSWORD_ENC')
+        ]).then(vals => {
+            return createPool({
+                host: vals[0],
+                database: vals[1],
+                port: Number(vals[2]),
+                user: vals[3], 
+                password: vals[4],
+                connectionLimit: 3,
+                permitLocalInfile: true
+            });
         });
-    });
 
-}
-
-async function getConnection() {
-
-    if (sharedPool === undefined) {
-        sharedPool = await buildConnectionPool();
+        const daoInstance = new MariaDao(await thePool);
+        return daoInstance;
     }
 
-    const conn = await sharedPool.getConnection();
-    return conn;
 }
-
-export async function listTables() {
-    const conn = await getConnection();
-    const raw = await conn.query('SHOW TABLES');
-    conn.release();
-
-    return raw;
-}
-
-export async function queryDrugs(term: string) {
-
-}
-
-export async function readDrug(id: number) {
-    const conn = await getConnection();
-    const raw = await conn.query(
-        'SELECT * FROM drugs WHERE id = ?',
-        [id]
-    );
-    conn.release();
-    return raw;
-}
-
-export async function createDrug(
-    ndc: string,
-    rxcui: string,
-    nameBrand: string,
-    nameLabel: string,
-    dosageAmount: number,
-    dosageUnits: string,
-    deliveryMethod: string
-) {
-    const conn = await getConnection();
-    const raw = await conn.query(
-        'INSERT INTO drugs (ndc, rxcui, name_brand, name_label, dosage_amount, dosage_units, delivery_method) ' +
-        'VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [ndc, rxcui, nameBrand, nameLabel, dosageAmount, dosageUnits, deliveryMethod]
-    );
-    conn.release();
-    return raw;
-}
-
-export function poolsClosed() {
-    sharedPool.end();
-}
-

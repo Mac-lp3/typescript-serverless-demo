@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { join } from 'path';
 import { open, stat } from 'fs/promises';
 import { SlapiDao } from '../../src/shared/types';
-import { build } from '../../src/shared/mariaDao';
+import { MariaDao } from '../../src/shared/mariaDao';
 import { initMaria } from '../../src/init/mariadb/main';
 
 describe('The maria dao and its builder', function() {
@@ -17,17 +17,17 @@ describe('The maria dao and its builder', function() {
         process.env.DB_PASSWORD_ENC = 'admin';
         process.env.INIT_SQL_DIR = 'sql/init'; // in prod, this is set in terraform
 
-        dao = await build();
+        dao = await MariaDao.build();
     })
 
-    after(function() {
+    after(async function() {
         delete process.env.DB_NAME;
         delete process.env.DB_PORT;
         delete process.env.DB_USERNAME_ENC;
         delete process.env.DB_PASSWORD_ENC;
         delete process.env.DATA_FILE_DIR;
         delete process.env.INIT_TABLES_SQL;
-        //dao.close();
+        await dao.close();
     })
 
     it('should format sql statements correctly', async function() {

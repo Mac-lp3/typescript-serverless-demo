@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { ImportMock } from 'ts-mock-imports';
 import * as dao from '../src/shared/mariaDao';
 import { getDrugs } from '../src/api/getDrugs/main';
-import { ResourceResponseBody } from '../src/shared/types';
+import { ResourceResponseBody, SlapiDao } from '../src/shared/types';
 
 describe('The getDrugs API method', function() {
 
@@ -21,10 +21,13 @@ describe('The getDrugs API method', function() {
 
     it('should return a drug with proper inputs', async function() {
         // stub the dao method
-        const stub = ImportMock.mockFunction(dao, 'readDrug', mockDbResult);
+        const mockManager = ImportMock.mockClass(dao, 'MariaDao');
+        mockManager.mock('readDrug', mockDbResult);
+        
+        const mockDao = mockManager.getMockInstance();
 
         // call it
-        const res = await getDrugs('1');
+        const res = await getDrugs(mockDao as any, '1');
 
         // ensure additional props were added
         assert.ok(res.hasOwnProperty('metadata'));
@@ -47,10 +50,12 @@ describe('The getDrugs API method', function() {
 
     it('should return an empty set if given a no-hit id', async function() {
         // stub the dao method
-        const stub = ImportMock.mockFunction(dao, 'readDrug', mockEmptyDbResult);
+        const mockManager = ImportMock.mockClass(dao, 'MariaDao');
+        mockManager.mock('readDrug', {});
+        const mockDao = mockManager.getMockInstance();
 
         // call it
-        const res = await getDrugs('1');
+        const res = await getDrugs(mockDao as any, '1');
 
         // ensure additional props were added
         assert.ok((res as ResourceResponseBody).metadata.hasOwnProperty('payloadType'));

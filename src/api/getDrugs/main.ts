@@ -1,4 +1,4 @@
-import { readDrug } from '../../shared/mariaDao';
+import { SlapiDao } from '../../shared/types';
 import { ErrorPayload, WarningPayload, ResourceResponseBody } from '../../shared/types';
 import { buildInstanceResponseBody, buildListResponseBody } from '../../shared/bodyBuilderMaria';
 
@@ -14,14 +14,14 @@ import { buildInstanceResponseBody, buildListResponseBody } from '../../shared/b
  * @param searchTerm 
  * @returns 
  */
-export async function getDrugs(id?: string, ndc?: string, rxcui?: string, searchTerm?: string): Promise<ErrorPayload | WarningPayload | ResourceResponseBody> {
+export async function getDrugs(dao: SlapiDao, id?: string, ndc?: string, rxcui?: string, searchTerm?: string): Promise<ErrorPayload | WarningPayload | ResourceResponseBody> {
 
     let responseBody: ErrorPayload | WarningPayload | ResourceResponseBody;
     if (id) {
 
         // TODO try/catch/exception
         const numericID: number = Number(id);
-        const rawDbData = await readDrug(numericID);
+        const rawDbData = await dao.readDrug(numericID);
 
         // TODO this call depends on the DAO method
         responseBody = buildInstanceResponseBody(rawDbData);

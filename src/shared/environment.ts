@@ -22,6 +22,8 @@ export async function getValue(propName: string): Promise<string> {
         } else {
             value = payload;
         }
+    } else {
+        console.log(`Env variable not found: ${propName}`);
     }
     return value;
 }

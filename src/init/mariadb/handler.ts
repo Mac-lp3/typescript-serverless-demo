@@ -1,8 +1,8 @@
 import { initMaria } from './main';
-import { build } from '../../shared/mariaDao';
+import { MariaDao } from '../../shared/mariaDao';
 import { SNSEvent, Context } from 'aws-lambda';
 
-const dao = build();
+const dao = MariaDao.build();
 
 export async function handle(event: SNSEvent, context: Context) {
 

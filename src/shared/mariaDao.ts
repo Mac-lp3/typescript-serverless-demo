@@ -19,17 +19,22 @@ class MariaDao implements SlapiDao {
         this.sharedPool.end();
     }
 
-    public async exec(sqlStatement: string) {
+    /**
+     * 
+     * @param sqlStatement assumed to be a string with optional '?'s to substitute
+     * @param options assumed to be an array of values (see node maria api)
+     * @returns 
+     */
+    public async exec(sqlStatement: string, options?: any) {
+
         const conn = await getConnection();
 
-        // const raw = await conn.query(`${sqlStatement}`);
-        // TODO
-        const raw = await conn.query(`
-            LOAD DATA LOCAL INFILE ?
-            INTO TABLE drugs FIELDS TERMINATED BY ","
-            (ndc, rxcui, name_brand, name_label, dosage_amount, dosage_units, delivery_method);
-        `, ['/home/staticlp3/src/sl-api/sql/data/drugs.csv']
-        );
+        let raw;
+        if (options) {
+            raw = await conn.query(sqlStatement, options);
+        } else {
+            raw = await conn.query(sqlStatement);
+        }
 
         conn.release();
         return raw;

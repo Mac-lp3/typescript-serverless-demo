@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { join } from 'path';
-import { open } from 'fs/promises';
+import { open, stat } from 'fs/promises';
 import { SlapiDao } from '../../src/shared/types';
 import { build } from '../../src/shared/mariaDao';
 import { initMaria } from '../../src/init/mariadb/main';
@@ -43,13 +43,13 @@ describe('The maria dao and its builder', function() {
     })
 
     it('should format sql statements correctly', async function() {
-        // console.log(`${process.env.LOAD_TABLES_SQL}`)
-        
-        // const rez = await dao.exec(process.env.LOAD_TABLES_SQL);
-
-        // console.log(rez);
+        // TODO get table list before
 
         await initMaria(dao);
+        
+        // TODO get table list after
+        // TODO ensure table list includes plans
+        // TODO ensure there is an entry in plans
     })
 
 })

@@ -25,26 +25,17 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 ## TODO
 
 * pattern for running SQL in lambda vs docker
-    - ~~SQL as env vars~~
     - placeholder replacement (local and cloud)
-        + update to full filepath placeholder
-        + how to handle the quotes? @ build/deplpoy time?
-            + placeholder in SQL: no quotes, no file name.
-            + new env var for data file folder path.
-                + set in TF & unit tests
-            + new convention: csv file names 1:1 match for tables they will populate
-            + lambda does the dir + file name.
-
-            + unit tests: read into var from file. replace @PLACEHOLDER with ?. pass in local csv path
-            + int tests: read into var from file. replace @PLACEHOLDER with ?. pass in local csv path
-            + lambda: read into var from file. replace @PLACEHOLDER with ?. pass in /opt/nodejs csv file path
+        + unit tests: read into var from file. replace @PLACEHOLDER with ?. pass in local csv path
+        + int tests: read into var from file. replace @PLACEHOLDER with ?. pass in local csv path
+        + lambda: read into var from file. replace @PLACEHOLDER with ?. pass in /opt/nodejs csv file path
     - incorperate into build
     - cloud testing 
         + ls & prints
         + connect & run
         + fix ACL/sec gorups/subnets/etc
 
-* update handler to init and pass in the maria dao
+* update init handler to create and pass in the maria dao
 
 * create connection pool outside of handler
     - update tests to use the new builder

@@ -8,8 +8,7 @@
     "maria:up": "docker run --rm -p 3306:3306 --name local-maria -e MYSQL_DATABASE=slapi -e MYSQL_ROOT_PASSWORD=admin -d mariadb && sleep 5",
     "maria:down": "docker container stop local-maria",
     "pretest:int:maria": "npm run maria:up",
-    "test:int": "mocha --exit --timeout 99999 -r ts-node/register test/int/initQuery.spec.ts test/int/database.spec.ts test/int/e2e.spec.ts || echo 'failed?'",
-    "test:int:maria": "mocha --exit --timeout 99999 -r ts-node/register test/int/e2e.spec.ts || echo 'failed?'",
+    "test:int:maria": "DB_NAME=slapi DB_PORT=3306 DB_USERNAME_ENC=root DB_PASSWORD_ENC=admin INIT_SQL_DIR=sql/init mocha --exit --timeout 99999 -r ts-node/register test/int/initQuery.spec.ts test/int/database.spec.ts test/int/e2e.spec.ts || echo 'failed?'",
     "posttest:int:maria": "npm run maria:down"
   },
   "author": "",

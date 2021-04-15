@@ -18,20 +18,10 @@ describe('Database connectivity', function() {
     }
 
     before(async function() {
-        // see test:int script in package.json 
-        process.env.DB_NAME = 'slapi';
-        process.env.DB_PORT = '3306';
-        process.env.DB_USERNAME_ENC = 'root';
-        process.env.DB_PASSWORD_ENC = 'admin';
-
         mariaDao = await MariaDao.build();
     })
 
     after(async function() {
-        delete process.env.DB_NAME;
-        delete process.env.DB_PORT;
-        delete process.env.DB_USERNAME_ENC;
-        delete process.env.DB_PASSWORD_ENC;
         await mariaDao.close();
     })
 

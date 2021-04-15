@@ -32,18 +32,6 @@ describe('e2e getDrugs lambda', function() {
         functionName: 'getDrugs'
     } as any
 
-    before(async function() {
-        // see test:int script in package.json 
-        process.env.DB_NAME = 'slapi';
-        process.env.DB_PORT = '3306';
-        process.env.DB_USERNAME_ENC = 'root';
-        process.env.DB_PASSWORD_ENC = 'admin';
-    })
-
-    after(async function() {
-
-    })
-
     it('should get a drug given a good ID', async function() {
         process.env.DB_NAME = 'slapi';
         process.env.DB_PORT = '3306';

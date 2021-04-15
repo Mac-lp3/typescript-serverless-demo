@@ -24,10 +24,10 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 
 ## TODO
 
-* tests: set env vars in package.json 
-* add init sql to lambda layer
+* add init sql folder to lambda layer
 * deploy sql with lambda layer
-* add init sql path var to init lambda
+* add init sql path var to lambda variables
+* validate RDS connectivity
 
 * HTTP query params in lambda
 * confirm/test response body serialization

@@ -9,6 +9,6 @@ export async function handle(event: SNSEvent, context: Context) {
     console.log('hi from the init DB lambda');
     console.log(`Event: ${event}, ${context}`);
 
-    initMaria(await dao);
+    await initMaria(await dao);
 
 }

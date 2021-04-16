@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
+      version = "~> 3.29.1"
     }
   }
 }
@@ -36,7 +37,7 @@ module kms_secrets {
 module sns {
   source                 = "./sns"
   api_db_id              = module.instances.api_db_id
-  db_setup_function_name = module.api_lambdas.db_setup_function_name
+  db_setup_function_name = module.api_lambdas.init_maria_function_name
 }
 
 module instances {

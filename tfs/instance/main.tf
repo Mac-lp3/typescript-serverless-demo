@@ -5,7 +5,7 @@ resource "aws_db_subnet_group" "slapi_db_subnet_group" {
   tags = {
     application = "slapi"
     environment = "dev"
-    Name        = "slapi db subnet group"
+    name        = "slapi db subnet group"
   }
 }
 
@@ -18,6 +18,7 @@ resource "aws_db_instance" "slapi_db" {
   name                 = "slapi"
   username             = var.db_username
   password             = var.db_password
+  skip_final_snapshot  = true
 
   tags = {
     application = "slapi"

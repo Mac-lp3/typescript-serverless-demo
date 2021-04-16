@@ -17,7 +17,7 @@ build_nodejs_layer:
 	cd $(build_dir)/nodejs && npm install --only=production
 	cd $(build_dir) && zip -r nodejs.zip nodejs
 
-build_db_setup:
+build_init_mariadb:
 	# clean up old files
 	rm -rf $(build_dir)/src/init/mariadb $(build_dir)/mariadb.zip
 

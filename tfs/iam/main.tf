@@ -57,9 +57,31 @@ resource "aws_iam_policy" "slapi_cmk_decrypt_policy" {
 EOF
 }
 
+resource "aws_iam_policy" "slapi_vpc_network_policy" {
+  name   = "slapi_vpc_network_policy"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:DescribeNetworkInterfaces",
+        "ec2:CreateNetworkInterface",
+        "ec2:DeleteNetworkInterface",
+        "ec2:DescribeInstances",
+        "ec2:AttachNetworkInterface"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+
+}
+
 resource "aws_iam_policy" "slapi_cloudwatch_policy" {
   name   = "slapi-cloudwatch-policy"
-
   policy = <<EOF
 {
   "Version": "2012-10-17",
@@ -76,7 +98,7 @@ resource "aws_iam_policy" "slapi_cloudwatch_policy" {
         "logs:PutLogEvents"
       ],
       "Effect": "Allow",
-      "Resource": "arn:aws:logs:us-east-1::log-group:/aws/lambda/*:*"
+      "Resource": "arn:aws:logs:::log-group:/aws/lambda/*:*"
     }
   ]
 }
@@ -91,4 +113,9 @@ resource "aws_iam_role_policy_attachment" "slapi_cmk_decrypt_policy_attachment" 
 resource "aws_iam_role_policy_attachment" "slapi_cloudwatch_policy_attachment" {
   role       = aws_iam_role.slapi_general_lambda_role.name
   policy_arn = aws_iam_policy.slapi_cloudwatch_policy.arn
+}
+
+resource "aws_iam_role_policy_attachment" "slapi_vpc_network_policy_attachment" {
+  role       = aws_iam_role.slapi_general_lambda_role.name
+  policy_arn = aws_iam_policy.slapi_vpc_network_policy.arn
 }

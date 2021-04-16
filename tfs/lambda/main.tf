@@ -9,13 +9,13 @@ resource "aws_lambda_layer_version" "nodejs_layer" {
 }
 
 resource "aws_lambda_function" "get_drugs_lambda" {
-  function_name    = "getDrugs"
+  function_name    = "get_drugs"
   s3_bucket        = var.lambda_code_bucket
   s3_key           = var.get_drugs_object_key
   source_code_hash = var.get_drugs_object_key
 
   handler = "handler.handle"
-  runtime = "nodejs12.x"
+  runtime = "nodejs14.x"
   role    = var.general_lambda_role_arn
 
   layers = [ var.nodejs_layer_arn ]
@@ -48,14 +48,14 @@ resource "aws_lambda_permission" "api_invoke" {
    source_arn = "${var.api_gateway_exec_arn}/*/*"
 }
 
-resource "aws_lambda_function" "rds_setup" {
-  function_name    = "rdsSetup"
+resource "aws_lambda_function" "init_maria" {
+  function_name    = "init_mariadb"
   s3_bucket        = var.lambda_code_bucket
   s3_key           = var.db_setup_object_key
   source_code_hash = var.db_setup_object_key
 
-  handler = "main.handle"
-  runtime = "nodejs12.x"
+  handler = "handler.handle"
+  runtime = "nodejs14.x"
   role    = var.general_lambda_role_arn
 
   layers = [ var.nodejs_layer_arn ]
@@ -83,8 +83,8 @@ resource "aws_lambda_function" "rds_setup" {
   }
 }
 
-resource "aws_sns_topic_subscription" "rds_setup_sub" {
+resource "aws_sns_topic_subscription" "init_maria_sub" {
   topic_arn = var.sns_creation_topic_arn
   protocol  = "lambda"
-  endpoint  = aws_lambda_function.rds_setup.arn
+  endpoint  = aws_lambda_function.init_maria.arn
 }

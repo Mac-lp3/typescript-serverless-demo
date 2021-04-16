@@ -11,12 +11,12 @@ provider "aws" {
   profile = "admin"
 }
 
-module api{
+module api {
   source = "./api"
   get_drugs_invoke_arn = module.api_lambdas.get_drugs_invoke_arn
 }
 
-module api_network{
+module api_network {
   source = "./network"
 }
 

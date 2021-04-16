@@ -25,6 +25,8 @@ export async function initMaria(dao: SlapiDao) {
     const dirents = await readdir(initSQLDir, { withFileTypes: true });
     const dirNames = dirents.filter(dir => dir.isDirectory()).map(dir => dir.name);
 
+    console.log(`Found the following init file folders: ${dirNames}`);
+
     let exists;
     let tmpSQL;
     let filehandle;
@@ -36,14 +38,18 @@ export async function initMaria(dao: SlapiDao) {
         // create it if not
         if(!exists) {
 
+            console.log(`Creating table: ${dirNames[i]}`);
+
             // exec create SQL
             filehandle = await open(`${initSQLDir}/${dirNames[i]}/create.sql`, 'r');
             tmpSQL = await filehandle.readFile('utf-8');
             await filehandle.close();
             await dao.exec(tmpSQL);
 
-            // check if there is data to load
+            // check if there is data to load as well
             try {
+
+                console.log(`Loading csv data for table: ${dirNames[i]}`);
 
                 // load it if so
                 filehandle = await open(`${initSQLDir}/${dirNames[i]}/load.sql`, 'r');
@@ -59,4 +65,6 @@ export async function initMaria(dao: SlapiDao) {
             }
         }
     }
+
+    console.log('DB initialization complete');
 }

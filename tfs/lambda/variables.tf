@@ -12,8 +12,8 @@ variable nodejs_object_key {}
 variable nodejs_layer_arn {}
 variable sns_creation_topic_arn {}
 
-variable data_file_dir {
-    default = "/opt/nodejs/data"
+variable init_sql_dir {
+    default = "/opt/nodejs/sql"
 }
 
 variable db_host {}

@@ -3,7 +3,7 @@ variable get_drugs_zip_path {
 }
 
 variable db_setup_zip_path {
-    default = "bin/build/dbSetup.zip"
+    default = "bin/build/mariadb.zip"
 }
 
 variable nodejs_zip_path {

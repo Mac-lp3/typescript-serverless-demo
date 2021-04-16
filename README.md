@@ -24,8 +24,6 @@ NPM packages and shared Lambda code is deployed as a lambda layer, which must ge
 
 ## TODO
 
-* deploy sql with lambda layer
-* add init sql path var to lambda variables
 * validate RDS connectivity
 
 * HTTP query params in lambda

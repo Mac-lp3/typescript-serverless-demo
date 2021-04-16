@@ -25,7 +25,7 @@ resource "aws_s3_bucket_object" "get_drugs_zip" {
 
 resource "aws_s3_bucket_object" "db_setup_zip" {
   bucket = aws_s3_bucket.lambda_code.bucket
-  key    = "init/db.zip"
+  key    = "init/mariadb.zip"
   acl    = "private"
   source = var.db_setup_zip_path
   etag   = filemd5(var.db_setup_zip_path)
